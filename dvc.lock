@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
   migrate_database_to_sql:
-    cmd: python3 src/migrate_to_sql.py
+    cmd: sqlite3 data/database.db -batch -init src/sql/init.sql
     deps:
     - path: data/account.csv
       md5: ef0f49c7954bbbfc783ea36a735b25e1
@@ -24,10 +24,47 @@ stages:
     - path: data/trans_dev.csv
       md5: c6f59a61bdc6227463d27b28727d2a14
       size: 33243199
-    - path: src/migrate_to_sql.py
-      md5: a6e04f443ed0af9d06231e604bd62de1
-      size: 142
+    - path: src/sql/create.sql
+      md5: a14005c0d44ccef3cb9b97755807f121
+      size: 382
+    - path: src/sql/init.sql
+      md5: 8b8563c2b6482e0eb34de27c9db3c670
+      size: 129
     outs:
     - path: data/database.db
-      md5: 5d41402abc4b2a76b9719d911017c592
-      size: 5
+      md5: 8216bf4ee95d6e069819a693d4b72b52
+      size: 376832
+  create_database:
+    cmd: sqlite3 data/database.db -batch -init src/sql/init.sql
+    deps:
+    - path: data/account.csv
+      md5: ef0f49c7954bbbfc783ea36a735b25e1
+      size: 156340
+    - path: data/card_dev.csv
+      md5: 7aaa57fe06bd39e81fa7dba9a9d27fb3
+      size: 4328
+    - path: data/client.csv
+      md5: 487458958bfdc1040ec8fd3fd4f6c01b
+      size: 94820
+    - path: data/disp.csv
+      md5: d6d137e58d95b0522ce284bcecb1c2c9
+      size: 129716
+    - path: data/district.csv
+      md5: 14aa6edfb2fa331dcd98aed1256b6d65
+      size: 6642
+    - path: data/loan_dev.csv
+      md5: 92611660fdf3cffd844726e59360d764
+      size: 11424
+    - path: data/trans_dev.csv
+      md5: c6f59a61bdc6227463d27b28727d2a14
+      size: 33243199
+    - path: src/sql/create.sql
+      md5: a14005c0d44ccef3cb9b97755807f121
+      size: 382
+    - path: src/sql/init.sql
+      md5: 8b8563c2b6482e0eb34de27c9db3c670
+      size: 129
+    outs:
+    - path: data/database.db
+      md5: 8216bf4ee95d6e069819a693d4b72b52
+      size: 376832

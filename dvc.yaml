@@ -1,6 +1,6 @@
 stages:
-  migrate_database_to_sql:
-    cmd: python3 src/migrate_to_sql.py
+  create_database:
+    cmd: sqlite3 data/database.db -batch -init src/sql/init.sql
     deps:
     - data/account.csv
     - data/card_dev.csv
@@ -9,6 +9,7 @@ stages:
     - data/district.csv
     - data/loan_dev.csv
     - data/trans_dev.csv
-    - src/migrate_to_sql.py
+    - src/sql/init.sql
+    - src/sql/create.sql
     outs:
     - data/database.db
