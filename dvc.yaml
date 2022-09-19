@@ -1,0 +1,14 @@
+stages:
+  migrate_database_to_sql:
+    cmd: python3 src/migrate_to_sql.py
+    deps:
+    - data/account.csv
+    - data/card_dev.csv
+    - data/client.csv
+    - data/disp.csv
+    - data/district.csv
+    - data/loan_dev.csv
+    - data/trans_dev.csv
+    - src/migrate_to_sql.py
+    outs:
+    - data/database.db
