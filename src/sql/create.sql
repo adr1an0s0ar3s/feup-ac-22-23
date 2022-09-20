@@ -71,5 +71,5 @@ CREATE TABLE transDev (
     balance REAL NOT NULL,
     k_symbol TEXT,
     bank TEXT,
-    account INT
+    account TEXT
 )
