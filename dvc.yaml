@@ -1,6 +1,6 @@
 stages:
   create_database:
-    cmd: sqlite3 data/database.db -batch -init src/sql/init.sql
+    cmd: sqlite3 data/database.db < src/sql/init.sql
     deps:
     - data/account.csv
     - data/card_dev.csv
