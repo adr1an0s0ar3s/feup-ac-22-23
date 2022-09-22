@@ -59,12 +59,12 @@ stages:
       md5: c6f59a61bdc6227463d27b28727d2a14
       size: 33243199
     - path: src/sql/create.sql
-      md5: cc717bfd35b32dbbf3934cd2d86ba3be
-      size: 1935
+      md5: 4d2826312c777d0bdfcb2603855a26b8
+      size: 2341
     - path: src/sql/init.sql
-      md5: 8604ad388a82a101cd20d9e9da786598
+      md5: 65b3f3235365fe21883eefd547fc5635
       size: 340
     outs:
     - path: data/database.db
-      md5: e4275996da35c3e8907617b4754bdeac
-      size: 35311616
+      md5: d5761dd556c781d737439acfac0ff017
+      size: 35721216
