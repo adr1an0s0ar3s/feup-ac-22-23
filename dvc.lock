@@ -35,7 +35,7 @@ stages:
       md5: 8216bf4ee95d6e069819a693d4b72b52
       size: 376832
   create_database:
-    cmd: sqlite3 data/database.db -batch -init src/sql/init.sql
+    cmd: sqlite3 data/database.db < src/sql/init.sql
     deps:
     - path: data/account.csv
       md5: ef0f49c7954bbbfc783ea36a735b25e1
@@ -59,12 +59,12 @@ stages:
       md5: c6f59a61bdc6227463d27b28727d2a14
       size: 33243199
     - path: src/sql/create.sql
-      md5: a14005c0d44ccef3cb9b97755807f121
-      size: 382
+      md5: cc717bfd35b32dbbf3934cd2d86ba3be
+      size: 1935
     - path: src/sql/init.sql
-      md5: 8b8563c2b6482e0eb34de27c9db3c670
-      size: 129
+      md5: 8604ad388a82a101cd20d9e9da786598
+      size: 340
     outs:
     - path: data/database.db
-      md5: 8216bf4ee95d6e069819a693d4b72b52
-      size: 376832
+      md5: e4275996da35c3e8907617b4754bdeac
+      size: 35311616
