@@ -62,8 +62,8 @@ CREATE TABLE loanDev (
     status INT NOT NULL
 );
 
-DROP TABLE IF EXISTS orderDev;
-CREATE TABLE orderDev (
+DROP TABLE IF EXISTS permanentOrderDev;
+CREATE TABLE permanentOrderDev (
     id INT NOT NULL PRIMARY KEY,
     accountId INT NOT NULL REFERENCES account,
     bankTo TEXT,
