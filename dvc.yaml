@@ -39,5 +39,20 @@ stages:
     outs:
     - data/model.joblib
     metrics:
-      - metrics/model_parameters.json:
-          cache: false
+    - metrics/model_parameters.json:
+        cache: false
+  test-model:
+    cmd: python3 src/test_model.py
+    deps:
+    - data/X_test.csv
+    - data/model.joblib
+    - data/y_test.csv
+    - src/test_model.py
+    metrics:
+    - metrics/results.json:
+        cache: false
+    #plots:
+    #- evaluation/plots/precision_recall.json:
+    #    cache: false
+    #- evaluation/plots/roc.json:
+    #    cache: false

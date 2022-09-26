@@ -8,7 +8,7 @@ def main():
     X_train, y_train = pd.read_csv('data/X_train.csv'), pd.read_csv('data/y_train.csv')
 
     # Create model
-    model = DecisionTreeClassifier()
+    model = DecisionTreeClassifier(max_depth=5)
 
     # Train model
     model.fit(X_train, y_train)

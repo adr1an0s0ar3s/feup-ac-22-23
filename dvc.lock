@@ -75,50 +75,69 @@ stages:
       md5: 17d7f638917887d4c5b3dc2121e03827
       size: 35721216
     - path: src/process_data.py
-      md5: 0b0de16e0ecc781cde17b7efed34a49e
-      size: 244
+      md5: 60cbd8b96693588f1d7ca25d35c2bffe
+      size: 275
     outs:
     - path: data/processed_data.csv
-      md5: 704f9d263c28cbb019db1a64181fd899
-      size: 11091
+      md5: 1001b78795b07b9a5224f2652f77ee1c
+      size: 9448
   split-data:
     cmd: python3 src/split_data.py
     deps:
     - path: data/processed_data.csv
-      md5: 704f9d263c28cbb019db1a64181fd899
-      size: 11091
+      md5: 1001b78795b07b9a5224f2652f77ee1c
+      size: 9448
     - path: src/split_data.py
-      md5: 9a14bc0f7c39c57dfb3fe25f178c6443
-      size: 690
+      md5: 5a51b00196ae1ffb2e0542a59f28a1d7
+      size: 691
     outs:
     - path: data/X_train.csv
-      md5: e91e6b6bd02e6e969a7d15e80afd2818
-      size: 7792
+      md5: ca946d5fa1ccbe3fefdbb42350cb16e5
+      size: 6563
     - path: data/y_train.csv
-      md5: 21511fef40fd9233e5e6e43805dbb43c
-      size: 535
+      md5: c7a4db2f05aa2839345903c46c8022be
+      size: 540
   train-model:
     cmd: python3 src/train_model.py
     deps:
     - path: data/X_test.csv
-      md5: 47b50daca30805049b79a3fecec11815
-      size: 2633
+      md5: c65673f496d4db24f6334d66333df341
+      size: 2216
     - path: data/X_train.csv
-      md5: e91e6b6bd02e6e969a7d15e80afd2818
-      size: 7792
+      md5: ca946d5fa1ccbe3fefdbb42350cb16e5
+      size: 6563
     - path: data/y_test.csv
-      md5: cdcd6dd40ffc88c31452ca716c002a98
-      size: 181
+      md5: 63a4fa69a15d2bf4f4def1d9423f4404
+      size: 176
     - path: data/y_train.csv
-      md5: 21511fef40fd9233e5e6e43805dbb43c
-      size: 535
+      md5: c7a4db2f05aa2839345903c46c8022be
+      size: 540
     - path: src/train_model.py
-      md5: fe78beb619909251ce4508d743006707
-      size: 590
+      md5: dd4b5ecce085aefa69ff4c2841a7a653
+      size: 601
     outs:
     - path: data/model.joblib
-      md5: fa30ac41f17b3dfc36f4928006e76c58
-      size: 7577
+      md5: 132c597858c15bb3bebe2faa110f256f
+      size: 4121
     - path: metrics/model_parameters.json
-      md5: 00862aa14df414ae2398efee32ceaacf
-      size: 278
+      md5: f6fa1e1ee1512162139d3a65d41bf2f0
+      size: 275
+  test-model:
+    cmd: python3 src/test_model.py
+    deps:
+    - path: data/X_test.csv
+      md5: c65673f496d4db24f6334d66333df341
+      size: 2216
+    - path: data/model.joblib
+      md5: 132c597858c15bb3bebe2faa110f256f
+      size: 4121
+    - path: data/y_test.csv
+      md5: 63a4fa69a15d2bf4f4def1d9423f4404
+      size: 176
+    - path: src/test_model.py
+      md5: ff90e749ac2062562f1c8089d75a9c10
+      size: 1307
+    outs:
+    - path: metrics/results.json
+      md5: 08bb82985a7e2eb8a9599b3d73090293
+      size: 121
