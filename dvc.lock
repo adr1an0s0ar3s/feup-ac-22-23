@@ -88,9 +88,18 @@ stages:
       md5: 704f9d263c28cbb019db1a64181fd899
       size: 11091
     - path: src/split_data.py
-      md5: 980af468a2d11952f2cc36a5e217c752
-      size: 653
+      md5: 9a14bc0f7c39c57dfb3fe25f178c6443
+      size: 690
     outs:
+    - path: data/X_train.csv
+      md5: e91e6b6bd02e6e969a7d15e80afd2818
+      size: 7792
+    - path: data/y_train.csv
+      md5: 21511fef40fd9233e5e6e43805dbb43c
+      size: 535
+  train-model:
+    cmd: python3 src/train_model.py
+    deps:
     - path: data/X_test.csv
       md5: 47b50daca30805049b79a3fecec11815
       size: 2633
@@ -103,3 +112,13 @@ stages:
     - path: data/y_train.csv
       md5: 21511fef40fd9233e5e6e43805dbb43c
       size: 535
+    - path: src/train_model.py
+      md5: fe78beb619909251ce4508d743006707
+      size: 590
+    outs:
+    - path: data/model.joblib
+      md5: fa30ac41f17b3dfc36f4928006e76c58
+      size: 7577
+    - path: metrics/model_parameters.json
+      md5: 00862aa14df414ae2398efee32ceaacf
+      size: 278

@@ -5,11 +5,13 @@ def main():
     # Read processed data
     df = pd.read_csv('data/processed_data.csv')
 
-    # Obtain _ and target variables
+    # Obtain independent and target variables
     X, y = df.drop('status', axis=1), df['status']
 
     # Split into test and train data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, shuffle=True, stratify=None)
+    
+    # Save split data
     X_train.to_csv('data/X_train.csv', index=False)
     X_test.to_csv('data/X_test.csv', index=False)
     y_train.to_csv('data/y_train.csv', index=False)

@@ -27,6 +27,17 @@ stages:
     - src/split_data.py
     outs:
     - data/X_train.csv
-    - data/X_test.csv
     - data/y_train.csv
+  train-model:
+    cmd: python3 src/train_model.py
+    deps:
+    - data/X_test.csv
+    - data/X_train.csv
     - data/y_test.csv
+    - data/y_train.csv
+    - src/train_model.py
+    outs:
+    - data/model.joblib
+    metrics:
+      - metrics/model_parameters.json:
+          cache: false
