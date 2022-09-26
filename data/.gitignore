@@ -1,2 +1,8 @@
 /database.db
 /processed_data.csv
+/train_data.csv
+/test_data.csv
+/X_train.csv
+/X_test.csv
+/y_train.csv
+/y_test.csv

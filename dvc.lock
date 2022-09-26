@@ -75,9 +75,31 @@ stages:
       md5: 17d7f638917887d4c5b3dc2121e03827
       size: 35721216
     - path: src/process_data.py
-      md5: 63adc6aefae4ddc5b2a86d17a49dd93e
-      size: 236
+      md5: 0b0de16e0ecc781cde17b7efed34a49e
+      size: 244
     outs:
     - path: data/processed_data.csv
-      md5: c9dcc124e5889024005d1ba1bfa3ad1c
-      size: 12294
+      md5: 704f9d263c28cbb019db1a64181fd899
+      size: 11091
+  split-data:
+    cmd: python3 src/split_data.py
+    deps:
+    - path: data/processed_data.csv
+      md5: 704f9d263c28cbb019db1a64181fd899
+      size: 11091
+    - path: src/split_data.py
+      md5: 980af468a2d11952f2cc36a5e217c752
+      size: 653
+    outs:
+    - path: data/X_test.csv
+      md5: 47b50daca30805049b79a3fecec11815
+      size: 2633
+    - path: data/X_train.csv
+      md5: e91e6b6bd02e6e969a7d15e80afd2818
+      size: 7792
+    - path: data/y_test.csv
+      md5: cdcd6dd40ffc88c31452ca716c002a98
+      size: 181
+    - path: data/y_train.csv
+      md5: 21511fef40fd9233e5e6e43805dbb43c
+      size: 535

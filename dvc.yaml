@@ -20,3 +20,13 @@ stages:
     - src/process_data.py
     outs:
     - data/processed_data.csv
+  split-data:
+    cmd: python3 src/split_data.py
+    deps:
+    - data/processed_data.csv
+    - src/split_data.py
+    outs:
+    - data/X_train.csv
+    - data/X_test.csv
+    - data/y_train.csv
+    - data/y_test.csv
