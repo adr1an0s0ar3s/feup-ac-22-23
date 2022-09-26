@@ -66,5 +66,18 @@ stages:
       size: 340
     outs:
     - path: data/database.db
-      md5: 609a88b8b4d2f40638f2f786078edadd
+      md5: 17d7f638917887d4c5b3dc2121e03827
       size: 35721216
+  process-data:
+    cmd: python3 src/process_data.py
+    deps:
+    - path: data/database.db
+      md5: 17d7f638917887d4c5b3dc2121e03827
+      size: 35721216
+    - path: src/process_data.py
+      md5: 63adc6aefae4ddc5b2a86d17a49dd93e
+      size: 236
+    outs:
+    - path: data/processed_data.csv
+      md5: c9dcc124e5889024005d1ba1bfa3ad1c
+      size: 12294
