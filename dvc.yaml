@@ -51,8 +51,8 @@ stages:
     metrics:
     - metrics/results.json:
         cache: false
-    #plots:
-    #- evaluation/plots/precision_recall.json:
-    #    cache: false
-    #- evaluation/plots/roc.json:
-    #    cache: false
+    plots:
+    - evaluation/plots/precision_recall.json:
+        cache: false
+    - evaluation/plots/roc.json:
+        cache: false
