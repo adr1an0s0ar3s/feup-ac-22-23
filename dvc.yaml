@@ -38,9 +38,8 @@ stages:
     - src/train_model.py
     outs:
     - data/model.joblib
-    metrics:
-    - metrics/model_parameters.json:
-        cache: false
+    params:
+      - train.max_depth
   test-model:
     cmd: python3 src/test_model.py
     deps:
@@ -54,5 +53,11 @@ stages:
     plots:
     - evaluation/plots/precision_recall.json:
         cache: false
+        x: recall
+        y: precision
+        title: Precision-Recall Curve
     - evaluation/plots/roc.json:
         cache: false
+        x: fpr
+        y: tpr
+        title: ROC Curve

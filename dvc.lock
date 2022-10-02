@@ -113,15 +113,15 @@ stages:
       md5: c7a4db2f05aa2839345903c46c8022be
       size: 540
     - path: src/train_model.py
-      md5: dd4b5ecce085aefa69ff4c2841a7a653
-      size: 601
+      md5: 488ae9896debd0d2a747ccebe9635d7a
+      size: 701
+    params:
+      params.yaml:
+        train.max_depth: 25
     outs:
     - path: data/model.joblib
-      md5: 3ceab82fc1351b610be7286486605434
-      size: 4121
-    - path: metrics/model_parameters.json
-      md5: f6fa1e1ee1512162139d3a65d41bf2f0
-      size: 275
+      md5: ac979086c317616163cb19472a7b56be
+      size: 7721
   test-model:
     cmd: python3 src/test_model.py
     deps:
@@ -129,8 +129,8 @@ stages:
       md5: c65673f496d4db24f6334d66333df341
       size: 2216
     - path: data/model.joblib
-      md5: 3ceab82fc1351b610be7286486605434
-      size: 4121
+      md5: ac979086c317616163cb19472a7b56be
+      size: 7721
     - path: data/y_test.csv
       md5: 63a4fa69a15d2bf4f4def1d9423f4404
       size: 176
@@ -139,11 +139,11 @@ stages:
       size: 2147
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: 0ad9dc3948acfe8a28976f636aaac08f
-      size: 555
+      md5: 9ee8937cb86264d2cb71f33dc680be2d
+      size: 268
     - path: evaluation/plots/roc.json
-      md5: b739093ebc6c5584b0b0c9f4b30be446
-      size: 572
+      md5: b9eb144a69dfa6585cc238824d1d4e10
+      size: 330
     - path: metrics/results.json
-      md5: cd61f0d53e2e5396f97fee73a06b2722
-      size: 147
+      md5: ff959adc0f45729a6699091a5a0fbde7
+      size: 135
