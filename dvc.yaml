@@ -40,8 +40,10 @@ stages:
     - src/train_model.py
     outs:
     - data/model.joblib
+    - metrics/model_parameters.json:
+        cache: false
     params:
-      - train.max_depth
+    - train.max_depth
   test-model:
     cmd: python3 src/test_model.py
     deps:
