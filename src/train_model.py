@@ -8,7 +8,7 @@ def main():
     # Load train data
     X_train, y_train = pd.read_csv('data/X_train.csv'), pd.read_csv('data/y_train.csv')
 
-    # Load parameters
+    # Load parameters (https://dvc.org/doc/command-reference/params)
     params = dvc.api.params_show()['train']
 
     # Create model
@@ -17,7 +17,7 @@ def main():
     # Train model
     model.fit(X_train, y_train)
 
-    # Store the model to disk
+    # Store the model to disk (https://scikit-learn.org/stable/model_persistence.html)
     dump(model, 'data/model.joblib')
     
     # Write model parameters to a file
