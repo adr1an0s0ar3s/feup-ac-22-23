@@ -26,7 +26,9 @@ stages:
     - data/processed_data.csv
     - src/split_data.py
     outs:
+    - data/X_test.csv
     - data/X_train.csv
+    - data/y_test.csv
     - data/y_train.csv
   train-model:
     cmd: python3 src/train_model.py
