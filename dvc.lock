@@ -66,13 +66,13 @@ stages:
       size: 340
     outs:
     - path: data/database.db
-      md5: 17d7f638917887d4c5b3dc2121e03827
+      md5: 609a88b8b4d2f40638f2f786078edadd
       size: 35721216
   process-data:
     cmd: python3 src/process_data.py
     deps:
     - path: data/database.db
-      md5: 17d7f638917887d4c5b3dc2121e03827
+      md5: 609a88b8b4d2f40638f2f786078edadd
       size: 35721216
     - path: src/process_data.py
       md5: 60cbd8b96693588f1d7ca25d35c2bffe
@@ -117,10 +117,10 @@ stages:
       size: 701
     params:
       params.yaml:
-        train.max_depth: 25
+        train.max_depth: 50
     outs:
     - path: data/model.joblib
-      md5: ac979086c317616163cb19472a7b56be
+      md5: 330e9d780e50ea28c970e77531785899
       size: 7721
   test-model:
     cmd: python3 src/test_model.py
@@ -129,7 +129,7 @@ stages:
       md5: c65673f496d4db24f6334d66333df341
       size: 2216
     - path: data/model.joblib
-      md5: ac979086c317616163cb19472a7b56be
+      md5: 330e9d780e50ea28c970e77531785899
       size: 7721
     - path: data/y_test.csv
       md5: 63a4fa69a15d2bf4f4def1d9423f4404
@@ -139,11 +139,11 @@ stages:
       size: 2147
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: 9ee8937cb86264d2cb71f33dc680be2d
-      size: 268
+      md5: 399ebe356198caa6e447c8fa77be9f9e
+      size: 266
     - path: evaluation/plots/roc.json
-      md5: b9eb144a69dfa6585cc238824d1d4e10
+      md5: 487858f4b09155731e1c1bdf5c90237a
       size: 330
     - path: metrics/results.json
-      md5: ff959adc0f45729a6699091a5a0fbde7
-      size: 135
+      md5: d92537de91f6a51891184272ed6eafef
+      size: 134
