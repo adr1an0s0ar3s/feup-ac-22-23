@@ -7,17 +7,18 @@ import os
 import json
 
 def main():
-    # Load model from disk
+    # Load model from disk (https://scikit-learn.org/stable/model_persistence.html)
     model = load('data/model.joblib')
     
     # Load test data
     X_test, y_test = pd.read_csv('data/X_test.csv'), pd.read_csv('data/y_test.csv')
 
     # Predict test data
+    # Useful read: predict() vs predict_proba() - https://towardsdatascience.com/predict-vs-predict-proba-scikit-learn-bdc45daa5972
     y_pred = model.predict(X_test)
     y_pred_prob = model.predict_proba(X_test)
     
-    # Calculate metrics
+    # Calculate metrics (https://dvc.org/doc/dvclive/api-reference/live)
     live = Live('evaluation')
     live.log_plot("roc", y_test.values.astype(int), y_pred_prob[:, 1])
 
@@ -29,17 +30,13 @@ def main():
     nth_point = math.ceil(len(prc_thresholds) / 1000)
     prc_points = list(zip(precision, recall, prc_thresholds))[::nth_point]
     prc_file = os.path.join("evaluation", "plots", "precision_recall.json")
-    with open(prc_file, "w") as fd:
-        json.dump(
-            {
-                "prc": [
-                    {"precision": p, "recall": r, "threshold": t}
-                    for p, r, t in prc_points
-                ]
-            },
-            fd,
-            indent=4,
-        )
+    with open(prc_file, "w") as file:
+        json.dump({
+            "prc": [
+                {"precision": p, "recall": r, "threshold": t}
+                for p, r, t in prc_points
+            ]
+        }, file, indent=4)
 
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred)
