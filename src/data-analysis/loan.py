@@ -11,7 +11,7 @@ def plot_amount_boxplot(df):
     ax[0].set_title("Loan Amount")
     ax[0].set_xticklabels([])
     ax[0].set_xticks([])
-    ax[0].set_ylabel('Amount (€)')
+    ax[0].set_ylabel('Amount (Kč)')
 
     sns.boxplot(df['payments'], ax=ax[1])
     ax[1].set_title("Monthly Payment")
@@ -23,7 +23,7 @@ def plot_amount_boxplot(df):
 
 def plot_amount_over_time(df):
     sns.lmplot(data=df, x='timestamp', y='amount')
-    plt.ylabel('Amount (€)')
+    plt.ylabel('Amount (Kč)')
     plt.xlabel('Year')
     plt.title('Distribution of loan amount over time')
 
