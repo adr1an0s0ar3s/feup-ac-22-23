@@ -20,15 +20,10 @@ def main():
     
     # Calculate metrics (https://dvc.org/doc/dvclive/api-reference/live)
     live = Live('evaluation')
-    live.log_plot("roc", y_test.values.astype(int), y_pred_prob[:, 1])
+    live.log_plot("roc", y_test.values.astype(int), y_pred_prob[:, 1], drop_intermediate=False)
 
-    # ... but actually it can be done with dumping data points into a file:
-    # ROC has a drop_intermediate arg that reduces the number of points.
-    # https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_curve.html#sklearn.metrics.roc_curve.
-    # PRC lacks this arg, so we manually reduce to 1000 points as a rough estimate.
     precision, recall, prc_thresholds = precision_recall_curve(y_test, y_pred_prob[:, 1])
-    nth_point = math.ceil(len(prc_thresholds) / 1000)
-    prc_points = list(zip(precision, recall, prc_thresholds))[::nth_point]
+    prc_points = list(zip(precision, recall, prc_thresholds))
     prc_file = os.path.join("evaluation", "plots", "precision_recall.json")
     with open(prc_file, "w") as file:
         json.dump({

@@ -66,13 +66,13 @@ stages:
       size: 340
     outs:
     - path: data/database.db
-      md5: 609a88b8b4d2f40638f2f786078edadd
+      md5: 4a4e1fee4fee12ce287ed83e0a4d0ba7
       size: 35721216
   process-data:
     cmd: python3 src/process_data.py
     deps:
     - path: data/database.db
-      md5: 609a88b8b4d2f40638f2f786078edadd
+      md5: 4a4e1fee4fee12ce287ed83e0a4d0ba7
       size: 35721216
     - path: src/process_data.py
       md5: 60cbd8b96693588f1d7ca25d35c2bffe
@@ -91,9 +91,15 @@ stages:
       md5: 5a51b00196ae1ffb2e0542a59f28a1d7
       size: 691
     outs:
+    - path: data/X_test.csv
+      md5: c65673f496d4db24f6334d66333df341
+      size: 2216
     - path: data/X_train.csv
       md5: ca946d5fa1ccbe3fefdbb42350cb16e5
       size: 6563
+    - path: data/y_test.csv
+      md5: 63a4fa69a15d2bf4f4def1d9423f4404
+      size: 176
     - path: data/y_train.csv
       md5: c7a4db2f05aa2839345903c46c8022be
       size: 540
@@ -113,14 +119,15 @@ stages:
       md5: c7a4db2f05aa2839345903c46c8022be
       size: 540
     - path: src/train_model.py
-      md5: 488ae9896debd0d2a747ccebe9635d7a
-      size: 701
+      md5: dd2605370610b94b57da6f32f6b406f4
+      size: 805
     params:
       params.yaml:
-        train.max_depth: 50
+        train:
+          max_depth: 50
     outs:
     - path: data/model.joblib
-      md5: 330e9d780e50ea28c970e77531785899
+      md5: 38afd2f030a30bddfecb9c43eedfb1d5
       size: 7721
   test-model:
     cmd: python3 src/test_model.py
@@ -129,21 +136,21 @@ stages:
       md5: c65673f496d4db24f6334d66333df341
       size: 2216
     - path: data/model.joblib
-      md5: 330e9d780e50ea28c970e77531785899
+      md5: 38afd2f030a30bddfecb9c43eedfb1d5
       size: 7721
     - path: data/y_test.csv
       md5: 63a4fa69a15d2bf4f4def1d9423f4404
       size: 176
     - path: src/test_model.py
-      md5: 68a8d70f7065ed0debd74bdc5e2f22ef
-      size: 2147
+      md5: 3ea3bf96dc435f9ec50560a19cfc5607
+      size: 1960
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: 399ebe356198caa6e447c8fa77be9f9e
-      size: 266
+      md5: a77be4cda2b05bef79eb0c9bccdb8645
+      size: 280
     - path: evaluation/plots/roc.json
-      md5: 487858f4b09155731e1c1bdf5c90237a
+      md5: ce921dda90f91c14ecabe960a1d3aed2
       size: 330
     - path: metrics/results.json
-      md5: d92537de91f6a51891184272ed6eafef
-      size: 134
+      md5: 005fee361298ee1ade334cb932bfc129
+      size: 148
