@@ -8,9 +8,17 @@ def plot_number_clients_per_decade_birth(df):
     ax.bar_label(ax.containers[0])
     plt.xlabel('decade')
     plt.title('Number of clients per decade of birth')
+    plt.grid(axis='y')
     sns.despine(ax=ax)
-    plt.tight_layout()
-    plt.savefig('../../analysis_plots/number_clients_per_decade_birth.png')
+    plt.savefig('../../analysis_plots/number_clients_per_decade_birth.png', bbox_inches='tight')
+    plt.clf()
+
+def plot_clients_sex_distribution(df):
+    ax = sns.countplot(df, x='sex')
+    ax.bar_label(ax.containers[0])
+    plt.title('Clients sex distribution')
+    sns.despine(ax=ax)
+    plt.savefig('../../analysis_plots/clients_sex_distribution.png', bbox_inches='tight')
     plt.clf()
 
 def main():
@@ -23,6 +31,7 @@ def main():
     df['birthNumber'] = pd.to_datetime(df['birthNumber'], format='%Y%m%d')
 
     plot_number_clients_per_decade_birth(df)
+    plot_clients_sex_distribution(df)
 
 if __name__ == "__main__":
     main()
