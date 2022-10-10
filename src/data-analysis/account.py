@@ -10,7 +10,7 @@ def plot_issuance_frequency_categories_count(df):
     plt.title("Issuance frequency categories count")
     plt.xlabel('frequency of issuance of statements')
     sns.despine(ax=ax)
-    plt.savefig('../../analysis_plots/issuance_frequency_categories_count.png', bbox_inches='tight')
+    plt.savefig('analysis_plots/issuance_frequency_categories_count.png', bbox_inches='tight')
     plt.clf()
 
 def plot_accounts_created_per_year(df):
@@ -19,7 +19,7 @@ def plot_accounts_created_per_year(df):
     plt.title('Number of accounts created per year')
     plt.xlabel('year')
     sns.despine(ax=ax)
-    plt.savefig('../../analysis_plots/accounts_created_per_year.png', bbox_inches='tight')
+    plt.savefig('analysis_plots/accounts_created_per_year.png', bbox_inches='tight')
     plt.clf()
 
 def plot_top_10_districts_with_most_accounts(df, con):
@@ -49,7 +49,7 @@ def plot_top_10_districts_with_most_accounts(df, con):
 
     sns.despine(fig=fig)
     fig.suptitle('Top 10 districts with most number of accounts')
-    plt.savefig('../../analysis_plots/top10_districts_most_accounts.png', bbox_inches='tight')
+    plt.savefig('analysis_plots/top10_districts_most_accounts.png', bbox_inches='tight')
     plt.clf()
 
 def plot_corr_accounts_per_district_with_district_table(df, con):
@@ -61,11 +61,11 @@ def plot_corr_accounts_per_district_with_district_table(df, con):
     plt.title('Correlation between the number of accounts per district and the district table attributes')
     plt.xlabel('district table attributes')
     plt.ylabel('correlation percentage')
-    plt.savefig('../../analysis_plots/corr_accounts_per_district_with_district_table.png', bbox_inches='tight')
+    plt.savefig('analysis_plots/corr_accounts_per_district_with_district_table.png', bbox_inches='tight')
     plt.clf()
 
 def main():
-    con = sqlite3.connect('../../data/database.db')
+    con = sqlite3.connect('data/database.db')
     df = pd.read_sql_query('SELECT * FROM account;', con, index_col='id')
     df['date'] = pd.to_datetime(df['date'], format='%y%m%d')
     plot_issuance_frequency_categories_count(df)

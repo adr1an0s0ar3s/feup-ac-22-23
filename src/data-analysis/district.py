@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 
 def plot_corr_matrix(df):
     fig, ax1 = plt.subplots(figsize=(18,8))
-    corr = df.drop(['id', 'accountId'], axis=1).corr()
+    corr = df.drop(['id', 'accountId'], axis=1).corr(numeric_only=True)
     mask = np.triu(np.ones_like(corr, dtype=bool))
     ax1.set_title("Correlation Matrix")
     sns.heatmap(corr, cmap=sns.diverging_palette(230, 20, as_cmap=True), vmax=1, vmin=-1, annot=True, mask=mask, ax=ax1)
     plt.tight_layout()
-    plt.savefig('../../analysis_plots/district_corr.png')
+    plt.savefig('analysis_plots/district_corr.png')
 
 def plot_loan_by_region(df):
     region_df = df.copy()
@@ -38,7 +38,7 @@ def plot_loan_by_region(df):
     ax[1].legend(['No', 'Yes'], title='Paid')
 
     plt.tight_layout()
-    plt.savefig('../../analysis_plots/district_loan_by_region.png')
+    plt.savefig('analysis_plots/district_loan_by_region.png')
 
 def plot_loan_by_district(df):
     district_df = df.copy()
@@ -70,10 +70,10 @@ def plot_loan_by_district(df):
     plt.title('Loan payment rate per district')
 
     plt.tight_layout()
-    plt.savefig('../../analysis_plots/district_loan_by_district.png')
+    plt.savefig('analysis_plots/district_loan_by_district.png')
 
 def main():
-    con = sqlite3.connect('../../data/database.db')
+    con = sqlite3.connect('data/database.db')
     df = pd.read_sql_query('SELECT * FROM loanDev JOIN (select account.id, district.id as districtId, districtName, region, nInhabitants, nMunicipalitiesSub499Inhabitants, nMunicipalities500to1999Inhabitants, nMunicipalities2000to9999Inhabitants, nMunicipalitiesOver10000Inhabitants, nCities, urbanInhabitantsRatio, averageSalary, unemploymentRate95, unemploymentRate96, nEnterpreneursPer1000Inhabitants, commitedCrimes95, commitedCrimes96 from account JOIN district where account.districtId = district.id) as A where loanDev.accountId = A.id;', con)
     plot_corr_matrix(df)
     plot_loan_by_region(df)

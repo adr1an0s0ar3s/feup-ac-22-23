@@ -19,7 +19,7 @@ def plot_amount_boxplot(df):
     ax[1].set_xticks([])
 
     fig.tight_layout()
-    plt.savefig('../../analysis_plots/loan_amount_boxplot.png')
+    plt.savefig('analysis_plots/loan_amount_boxplot.png')
 
 def plot_amount_over_time(df):
     sns.lmplot(data=df, x='timestamp', y='amount')
@@ -30,7 +30,7 @@ def plot_amount_over_time(df):
     years = [datetime.datetime(1993+i, 1, 1, 0, 0).timestamp() for i in range(0,5)]
     plt.xticks(ticks=years,labels=[93, 94, 95, 96, 97])
     plt.tight_layout()
-    plt.savefig('../../analysis_plots/loan_amount_over_time.png')
+    plt.savefig('analysis_plots/loan_amount_over_time.png')
 
 def plot_amount_distribution(df):
     tmp_df = df.copy()
@@ -41,14 +41,14 @@ def plot_amount_distribution(df):
     plt.title('Loan amount distribution')
     plt.xlabel('Amount (Kč)')
     plt.legend(['Yes', 'No'], title='Loan paid')
-    plt.savefig('../../analysis_plots/loan_amount_distribution0.png')
+    plt.savefig('analysis_plots/loan_amount_distribution0.png')
 
     plot = sns.displot(tmp_df, x='amount', hue='status', stat='density', col='status', common_norm=False, kde=True, palette=['#E1812C', '#8E9A9D'], col_order=['Yes', 'No'])
     plot.axes[0,0].set_xlabel('Amount (Kč)')
     plot.axes[0,1].set_xlabel('Amount (Kč)')
     plt.tight_layout()
     
-    plt.savefig('../../analysis_plots/loan_amount_distribution1.png')
+    plt.savefig('analysis_plots/loan_amount_distribution1.png')
 
 
 def date_to_timestamp(date):
@@ -58,7 +58,7 @@ def date_to_timestamp(date):
     return datetime.datetime(Y,M,D, 0, 0).timestamp()
 
 def main():
-    con = sqlite3.connect('../../data/database.db')
+    con = sqlite3.connect('data/database.db')
     df = pd.read_sql_query('SELECT * FROM loanDev', con)
     df['timestamp'] = df['date'].apply(date_to_timestamp)
     plot_amount_boxplot(df)

@@ -10,7 +10,7 @@ def plot_number_clients_per_decade_birth(df):
     plt.title('Number of clients per decade of birth')
     plt.grid(axis='y')
     sns.despine(ax=ax)
-    plt.savefig('../../analysis_plots/number_clients_per_decade_birth.png', bbox_inches='tight')
+    plt.savefig('analysis_plots/number_clients_per_decade_birth.png', bbox_inches='tight')
     plt.clf()
 
 def plot_clients_sex_distribution(df):
@@ -18,11 +18,11 @@ def plot_clients_sex_distribution(df):
     ax.bar_label(ax.containers[0])
     plt.title('Clients sex distribution')
     sns.despine(ax=ax)
-    plt.savefig('../../analysis_plots/clients_sex_distribution.png', bbox_inches='tight')
+    plt.savefig('analysis_plots/clients_sex_distribution.png', bbox_inches='tight')
     plt.clf()
 
 def main():
-    con = sqlite3.connect('../../data/database.db')
+    con = sqlite3.connect('data/database.db')
     df = pd.read_sql_query('SELECT * FROM client;', con, index_col='id')
 
     df['birthNumber'] = df['birthNumber'].astype('int64')
