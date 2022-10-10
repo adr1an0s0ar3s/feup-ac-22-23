@@ -10,8 +10,7 @@ def plot_issuance_frequency_categories_count(df):
     plt.title("Issuance frequency categories count")
     plt.xlabel('frequency of issuance of statements')
     sns.despine(ax=ax)
-    plt.tight_layout()
-    plt.savefig('../../analysis_plots/issuance_frequency_categories_count.png')
+    plt.savefig('../../analysis_plots/issuance_frequency_categories_count.png', bbox_inches='tight')
     plt.clf()
 
 def plot_accounts_created_per_year(df):
@@ -20,8 +19,7 @@ def plot_accounts_created_per_year(df):
     plt.title('Number of accounts created per year')
     plt.xlabel('year')
     sns.despine(ax=ax)
-    plt.tight_layout()
-    plt.savefig('../../analysis_plots/accounts_created_per_year.png')
+    plt.savefig('../../analysis_plots/accounts_created_per_year.png', bbox_inches='tight')
     plt.clf()
 
 def plot_top_10_districts_with_most_accounts(df, con):
@@ -51,8 +49,19 @@ def plot_top_10_districts_with_most_accounts(df, con):
 
     sns.despine(fig=fig)
     fig.suptitle('Top 10 districts with most number of accounts')
-    plt.tight_layout()
-    plt.savefig('../../analysis_plots/top10_districts_most_accounts.png')
+    plt.savefig('../../analysis_plots/top10_districts_most_accounts.png', bbox_inches='tight')
+    plt.clf()
+
+def plot_corr_accounts_per_district_with_district_table(df, con):
+    dist = pd.read_sql_query('SELECT * FROM district;', con, index_col='id')
+    corr = dist.corrwith(df['districtId'].value_counts(), numeric_only=True)
+    ax = plt.bar(corr.index, corr.values)
+    plt.xticks(rotation=90)
+    plt.grid(axis='y')
+    plt.title('Correlation between the number of accounts per district and the district table attributes')
+    plt.xlabel('district table attributes')
+    plt.ylabel('correlation percentage')
+    plt.savefig('../../analysis_plots/corr_accounts_per_district_with_district_table.png', bbox_inches='tight')
     plt.clf()
 
 def main():
@@ -62,6 +71,7 @@ def main():
     plot_issuance_frequency_categories_count(df)
     plot_accounts_created_per_year(df)
     plot_top_10_districts_with_most_accounts(df, con)
+    plot_corr_accounts_per_district_with_district_table(df, con)
 
 if __name__ == "__main__":
     main()
