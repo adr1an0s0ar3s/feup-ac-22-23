@@ -127,8 +127,11 @@ stages:
           max_depth: 50
     outs:
     - path: data/model.joblib
-      md5: 38afd2f030a30bddfecb9c43eedfb1d5
+      md5: 75d8d512373c0d0c4c8e8810d6a96d8a
       size: 7721
+    - path: metrics/model_parameters.json
+      md5: 03bb36fedb06ec38cc1de705da40d831
+      size: 276
   test-model:
     cmd: python3 src/test_model.py
     deps:
@@ -136,21 +139,80 @@ stages:
       md5: c65673f496d4db24f6334d66333df341
       size: 2216
     - path: data/model.joblib
-      md5: 38afd2f030a30bddfecb9c43eedfb1d5
+      md5: 75d8d512373c0d0c4c8e8810d6a96d8a
       size: 7721
     - path: data/y_test.csv
       md5: 63a4fa69a15d2bf4f4def1d9423f4404
       size: 176
     - path: src/test_model.py
-      md5: 3ea3bf96dc435f9ec50560a19cfc5607
-      size: 1960
+      md5: 11186bd2c9b9422c032081e43eeb80af
+      size: 2322
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: a77be4cda2b05bef79eb0c9bccdb8645
+      md5: 1424d612e4a131eab0a3a17cbf7d16ce
       size: 280
     - path: evaluation/plots/roc.json
-      md5: ce921dda90f91c14ecabe960a1d3aed2
+      md5: 1bb27a5802066e7bd99be25f798d7596
       size: 330
     - path: metrics/results.json
-      md5: 005fee361298ee1ade334cb932bfc129
-      size: 148
+      md5: b64912cfdfa9d393ad88776385f4d9f6
+      size: 147
+  plot-data:
+    cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py
+      && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
+    deps:
+    - path: data/database.db
+      md5: 609a88b8b4d2f40638f2f786078edadd
+      size: 35721216
+    - path: src/data-analysis/account.py
+      md5: da39556f9e466f269eff30c4c133872b
+      size: 2980
+    - path: src/data-analysis/client.py
+      md5: 80ca5a42b40ee5cb1decdb0b7efeefdc
+      size: 1340
+    - path: src/data-analysis/district.py
+      md5: 906c963c595b005722d8409eba86f42d
+      size: 3919
+    - path: src/data-analysis/loan.py
+      md5: e4a72439f85d10ece4872b5af179cc94
+      size: 2240
+    outs:
+    - path: analysis_plots/accounts_created_per_year.png
+      md5: c58edf3b514f820f47ebb04a53179bc0
+      size: 21499
+    - path: analysis_plots/clients_sex_distribution.png
+      md5: 71bf9989c77179534fc22625179b7462
+      size: 14559
+    - path: analysis_plots/corr_accounts_per_district_with_district_table.png
+      md5: ad8b7a064760836d5218db7abe397676
+      size: 59250
+    - path: analysis_plots/district_corr.png
+      md5: be2e49f0a7ab659405ab67a84530da99
+      size: 185195
+    - path: analysis_plots/district_loan_by_district.png
+      md5: 2e9b7dd9e1b0657651af56dc51a3b85c
+      size: 109031
+    - path: analysis_plots/district_loan_by_region.png
+      md5: ef78a56fa4330d0f658745f469cd4a68
+      size: 33914
+    - path: analysis_plots/issuance_frequency_categories_count.png
+      md5: dda76a24b939ee8c19dc1a6c29e140d3
+      size: 34625
+    - path: analysis_plots/loan_amount_boxplot.png
+      md5: c5cefa3758f36970bd5332b468d50652
+      size: 21936
+    - path: analysis_plots/loan_amount_distribution0.png
+      md5: 5a20f6cbd7d8d318e19ecc126d320dc0
+      size: 29743
+    - path: analysis_plots/loan_amount_distribution1.png
+      md5: 6edeb6522b0d38376840892ddc4f44b6
+      size: 37530
+    - path: analysis_plots/loan_amount_over_time.png
+      md5: 3dddb4c4223ed72f11184125433b4491
+      size: 49313
+    - path: analysis_plots/number_clients_per_decade_birth.png
+      md5: 1602baba3620c5f25791b9072573ddfd
+      size: 22419
+    - path: analysis_plots/top10_districts_most_accounts.png
+      md5: 81ef310d34eacb2ed3cfdc7fbda760b0
+      size: 43944
