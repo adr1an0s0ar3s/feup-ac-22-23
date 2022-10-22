@@ -49,7 +49,7 @@ SELECT * FROM transDev;
 DROP VIEW IF EXISTS loanDev_di_view;
 CREATE VIEW loanDev_di_view AS
 SELECT id, accountId, date, amount, duration, payments,
-    CASE WHEN status == '-1'
+    CASE WHEN status = '-1'
     THEN 1
     ELSE 0
     END AS status
