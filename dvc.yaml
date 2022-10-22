@@ -1,8 +1,7 @@
 stages:
-  create_database:
-    cmd: sqlite3 data/database.db < src/sql/init.sql
+  create-database:
+    cmd: sqlite3 data/database.db ".read src/sql/init.sql" ".read src/sql/create_data_integration_views.sql" ".read src/sql/create_data_feature_engineering_views.sql"
     deps:
-    - data/account.csv
     - data/card_dev.csv
     - data/client.csv
     - data/disp.csv
@@ -11,6 +10,8 @@ stages:
     - data/trans_dev.csv
     - src/sql/init.sql
     - src/sql/create.sql
+    - src/sql/create_data_integration_views.sql
+    - src/sql/create_data_feature_engineering_views.sql
     outs:
     - data/database.db
   process-data:

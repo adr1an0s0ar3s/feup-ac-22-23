@@ -72,8 +72,8 @@ stages:
     cmd: python3 src/process_data.py
     deps:
     - path: data/database.db
-      md5: 4a4e1fee4fee12ce287ed83e0a4d0ba7
-      size: 35721216
+      md5: 4b0d22b4bce55a39428963fa43216774
+      size: 35729408
     - path: src/process_data.py
       md5: 60cbd8b96693588f1d7ca25d35c2bffe
       size: 275
@@ -216,3 +216,41 @@ stages:
     - path: analysis_plots/top10_districts_most_accounts.png
       md5: 81ef310d34eacb2ed3cfdc7fbda760b0
       size: 43944
+  create-database:
+    cmd: sqlite3 data/database.db ".read src/sql/init.sql" ".read src/sql/create_data_integration_views.sql"
+      ".read src/sql/create_data_feature_engineering_views.sql"
+    deps:
+    - path: data/card_dev.csv
+      md5: 7aaa57fe06bd39e81fa7dba9a9d27fb3
+      size: 4328
+    - path: data/client.csv
+      md5: 487458958bfdc1040ec8fd3fd4f6c01b
+      size: 94820
+    - path: data/disp.csv
+      md5: d6d137e58d95b0522ce284bcecb1c2c9
+      size: 129716
+    - path: data/district.csv
+      md5: 14aa6edfb2fa331dcd98aed1256b6d65
+      size: 6642
+    - path: data/loan_dev.csv
+      md5: 92611660fdf3cffd844726e59360d764
+      size: 11424
+    - path: data/trans_dev.csv
+      md5: c6f59a61bdc6227463d27b28727d2a14
+      size: 33243199
+    - path: src/sql/create.sql
+      md5: 8c3e35359cf1324bf1534d5077c84f58
+      size: 2359
+    - path: src/sql/create_data_feature_engineering_views.sql
+      md5: 69efadfc26f8e81a1e5ca28441f41ba2
+      size: 2634
+    - path: src/sql/create_data_integration_views.sql
+      md5: d32ba236064b9beec6bb09984cd23911
+      size: 1666
+    - path: src/sql/init.sql
+      md5: 65b3f3235365fe21883eefd547fc5635
+      size: 340
+    outs:
+    - path: data/database.db
+      md5: 4b0d22b4bce55a39428963fa43216774
+      size: 35729408
