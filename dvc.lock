@@ -145,8 +145,8 @@ stages:
       md5: 63a4fa69a15d2bf4f4def1d9423f4404
       size: 176
     - path: src/test_model.py
-      md5: 11186bd2c9b9422c032081e43eeb80af
-      size: 2322
+      md5: 04a0d3fb6f5bb80a06dc565862226816
+      size: 1933
     outs:
     - path: evaluation/plots/precision_recall.json
       md5: 1424d612e4a131eab0a3a17cbf7d16ce
@@ -162,8 +162,8 @@ stages:
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
     deps:
     - path: data/database.db
-      md5: 609a88b8b4d2f40638f2f786078edadd
-      size: 35721216
+      md5: 4b0d22b4bce55a39428963fa43216774
+      size: 35729408
     - path: src/data-analysis/account.py
       md5: da39556f9e466f269eff30c4c133872b
       size: 2980
@@ -208,8 +208,8 @@ stages:
       md5: 6edeb6522b0d38376840892ddc4f44b6
       size: 37530
     - path: analysis_plots/loan_amount_over_time.png
-      md5: 3dddb4c4223ed72f11184125433b4491
-      size: 49313
+      md5: 9ebf754458d2d139481a38b5269ea297
+      size: 49112
     - path: analysis_plots/number_clients_per_decade_birth.png
       md5: 1602baba3620c5f25791b9072573ddfd
       size: 22419
