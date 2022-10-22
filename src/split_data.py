@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 
 def main():
     # Read processed data
-    df = pd.read_csv('data/processed_data.csv')
+    df = pd.read_csv('data/clean_data.csv')
 
     # Obtain independent and target variables
     X, y = df.drop('status', axis=1), df['status']

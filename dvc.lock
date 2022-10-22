@@ -242,15 +242,15 @@ stages:
       md5: 8c3e35359cf1324bf1534d5077c84f58
       size: 2359
     - path: src/sql/create_data_feature_engineering_views.sql
-      md5: 69efadfc26f8e81a1e5ca28441f41ba2
-      size: 2634
+      md5: b38648a3de6aad79f4ca65764a67edd0
+      size: 3424
     - path: src/sql/create_data_integration_views.sql
-      md5: d32ba236064b9beec6bb09984cd23911
-      size: 1666
+      md5: 387435387206ef78c774e3e0311ae018
+      size: 1665
     - path: src/sql/init.sql
       md5: 65b3f3235365fe21883eefd547fc5635
       size: 340
     outs:
     - path: data/database.db
-      md5: 4b0d22b4bce55a39428963fa43216774
+      md5: d5dd98899dd0c29b72015810a069cebd
       size: 35729408

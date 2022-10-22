@@ -14,17 +14,38 @@ stages:
     - src/sql/create_data_feature_engineering_views.sql
     outs:
     - data/database.db
-  process-data:
-    cmd: python3 src/process_data.py
+  unify-data:
+    cmd: python3 src/unify_data.py
     deps:
     - data/database.db
-    - src/process_data.py
+    - src/unify_data.py
     outs:
-    - data/processed_data.csv
+    - data/unified_data.csv
+  clean-redundancy:
+    cmd: python3 src/data-cleaning/redundancy.py
+    deps:
+    - data/unified_data.csv
+    - src/data-cleaning/redundancy.py
+    outs:
+    - data/clean_data0.csv
+  clean-missing-data:
+    cmd: python3 src/data-cleaning/missing_data.py
+    deps:
+    - data/clean_data0.csv
+    - src/data-cleaning/missing_data.py
+    outs:
+    - data/clean_data1.csv
+  clean-outliers:
+    cmd: python3 src/data-cleaning/outliers.py
+    deps:
+    - data/clean_data1.csv
+    - src/data-cleaning/outliers.py
+    outs:
+    - data/clean_data.csv
   split-data:
     cmd: python3 src/split_data.py
     deps:
-    - data/processed_data.csv
+    - data/clean_data.csv
     - src/split_data.py
     outs:
     - data/X_test.csv
