@@ -23,23 +23,28 @@ SELECT * FROM client_di_view;
 
 DROP VIEW IF EXISTS shared_account_view;
 CREATE VIEW shared_account_view AS
-SELECT id, COUNT(*) > 1 AS isShared 
+SELECT accountId as id, COUNT(*) > 1 AS isShared 
 FROM disp 
 GROUP BY accountId;
 
 DROP VIEW IF EXISTS account_balance_view;
 CREATE VIEW account_balance_view AS
-SELECT A.accountId AS id, A.balance
-FROM transDev AS A LEFT OUTER JOIN transDev AS B
-    ON A.accountId = B.accountId AND A.date < B.date
-WHERE B.accountId IS NULL;
+SELECT A.accountId as id, AVG(A.balance) as balance
+FROM transDev as A
+INNER JOIN (
+    SELECT accountId, balance, MAX(date) as date
+    FROM transDev
+    GROUP BY accountId
+) AS B
+ON A.accountId = B.accountId AND A.date = B.date
+GROUP BY A.accountID;
 
 DROP VIEW IF EXISTS account_view;
 CREATE VIEW account_view AS
 SELECT account_di_view.id, districtId, frequency, date, isShared, balance
 FROM account_di_view
-    JOIN shared_account_view ON account_di_view.id = shared_account_view.id
-    JOIN account_balance_view ON account_di_view.id = account_balance_view.id;
+    JOIN shared_account_view USING (id)
+    LEFT OUTER JOIN account_balance_view USING (id);
 
 -- ============================= DISP VIEW =============================
 
