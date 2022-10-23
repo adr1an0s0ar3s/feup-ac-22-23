@@ -8,7 +8,7 @@ def main():
         FROM loanDev_view \
         JOIN account_view ON account_view.id = loanDev_view.accountId \
         JOIN owners_sex_birthday_view ON owners_sex_birthday_view.accountId = account_view.id \
-        JOIN owners_card_type ON owners_card_type.accountId = account_view.id \
+        LEFT OUTER JOIN owners_card_type ON owners_card_type.accountId = account_view.id \
         JOIN district_view ON district_view.id = account_view.districtId'
     , con)
 
