@@ -85,24 +85,24 @@ stages:
     cmd: python3 src/split_data.py
     deps:
     - path: data/clean_data.csv
-      md5: 8cd840c9db14d73193ab1192aea647df
-      size: 13079
+      md5: 6ff909ae6329e06b319e73fda3204cdb
+      size: 59113
     - path: src/split_data.py
       md5: 5798fbafc67dcffd0c5e93200d86e5af
       size: 687
     outs:
     - path: data/X_test.csv
-      md5: a01a8641ae7d98d28141271c49aa157f
-      size: 3237
+      md5: 0cdb1d69f842bb1a5b0380fdce9bd420
+      size: 15056
     - path: data/X_train.csv
-      md5: a204ef531c70f57e9ec97b0fb0fc5c72
-      size: 9222
+      md5: 7e89db0049d65e2b462ee86f0f390d9a
+      size: 43903
     - path: data/y_test.csv
-      md5: 63a4fa69a15d2bf4f4def1d9423f4404
-      size: 176
+      md5: db085912f19bdc5787bb1121aefdf041
+      size: 171
     - path: data/y_train.csv
-      md5: c7a4db2f05aa2839345903c46c8022be
-      size: 540
+      md5: 39f192e39e2e14596d362e78560f22df
+      size: 499
   train-model:
     cmd: python3 src/train_model.py
     deps:
@@ -159,7 +159,7 @@ stages:
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
     deps:
     - path: data/database.db
-      md5: ffa349550e94f44586ab40583adbd41c
+      md5: 976a3f1e30b07923ad0902d972fd17b1
       size: 35729408
     - path: src/data-analysis/account.py
       md5: da39556f9e466f269eff30c4c133872b
@@ -205,8 +205,8 @@ stages:
       md5: 6edeb6522b0d38376840892ddc4f44b6
       size: 37530
     - path: analysis_plots/loan_amount_over_time.png
-      md5: 6f1e7d372129c4b0da97b6c7e672caef
-      size: 49323
+      md5: ea4da71d7f2944fbbda3692209b6dbf1
+      size: 49248
     - path: analysis_plots/number_clients_per_decade_birth.png
       md5: 1602baba3620c5f25791b9072573ddfd
       size: 22419
@@ -239,8 +239,8 @@ stages:
       md5: 8c3e35359cf1324bf1534d5077c84f58
       size: 2359
     - path: src/sql/create_data_feature_engineering_views.sql
-      md5: b38648a3de6aad79f4ca65764a67edd0
-      size: 3424
+      md5: bf52ab0980271de6a120d6df7eadf6d3
+      size: 3462
     - path: src/sql/create_data_integration_views.sql
       md5: 387435387206ef78c774e3e0311ae018
       size: 1665
@@ -249,57 +249,57 @@ stages:
       size: 340
     outs:
     - path: data/database.db
-      md5: ffa349550e94f44586ab40583adbd41c
+      md5: 976a3f1e30b07923ad0902d972fd17b1
       size: 35729408
   unify-data:
     cmd: python3 src/unify_data.py
     deps:
     - path: data/database.db
-      md5: ffa349550e94f44586ab40583adbd41c
+      md5: 976a3f1e30b07923ad0902d972fd17b1
       size: 35729408
     - path: src/unify_data.py
-      md5: 8250f74ec0c4238d20bc1a0eca6e4e0e
-      size: 273
+      md5: 552b1849fa91d7457be097157e64a65d
+      size: 1166
     outs:
     - path: data/unified_data.csv
-      md5: 1001b78795b07b9a5224f2652f77ee1c
-      size: 9448
+      md5: 53d196e8624499a8a43d719df6492e11
+      size: 55652
   clean-redundancy:
     cmd: python3 src/data-cleaning/redundancy.py
     deps:
     - path: data/unified_data.csv
-      md5: 1001b78795b07b9a5224f2652f77ee1c
-      size: 9448
+      md5: 53d196e8624499a8a43d719df6492e11
+      size: 55652
     - path: src/data-cleaning/redundancy.py
       md5: bc954149ef2f4ee69220045739968e3a
       size: 155
     outs:
     - path: data/clean_data0.csv
-      md5: fd94fd4be5e39f06585be5e018564bc1
-      size: 10651
+      md5: 24fff7b9c50f41c54a1c9db20c7d8554
+      size: 56690
   clean-missing-data:
     cmd: python3 src/data-cleaning/missing_data.py
     deps:
     - path: data/clean_data0.csv
-      md5: fd94fd4be5e39f06585be5e018564bc1
-      size: 10651
+      md5: 24fff7b9c50f41c54a1c9db20c7d8554
+      size: 56690
     - path: src/data-cleaning/missing_data.py
       md5: c7b2d259dad4485541a13ab2039c8cdc
       size: 154
     outs:
     - path: data/clean_data1.csv
-      md5: 601af29dddcfa9d1d5a886a46d93a96b
-      size: 11864
+      md5: e6af8fe9d8b9ea18c43f0486da4d71c5
+      size: 57898
   clean-outliers:
     cmd: python3 src/data-cleaning/outliers.py
     deps:
     - path: data/clean_data1.csv
-      md5: 601af29dddcfa9d1d5a886a46d93a96b
-      size: 11864
+      md5: e6af8fe9d8b9ea18c43f0486da4d71c5
+      size: 57898
     - path: src/data-cleaning/outliers.py
       md5: 662e1a767e1816c2cfcf51c7020d029e
       size: 153
     outs:
     - path: data/clean_data.csv
-      md5: 8cd840c9db14d73193ab1192aea647df
-      size: 13079
+      md5: 6ff909ae6329e06b319e73fda3204cdb
+      size: 59113
