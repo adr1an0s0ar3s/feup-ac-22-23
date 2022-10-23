@@ -7,3 +7,7 @@
 /y_train.csv
 /y_test.csv
 /model.joblib
+/clean_data.csv
+/clean_data0.csv
+/clean_data1.csv
+/unified_data.csv
