@@ -85,18 +85,18 @@ stages:
     cmd: python3 src/split_data.py
     deps:
     - path: data/clean_data.csv
-      md5: 6ff909ae6329e06b319e73fda3204cdb
-      size: 59113
+      md5: 5bd14e4fba1c704504b13a200ff21ca5
+      size: 58773
     - path: src/split_data.py
       md5: 5798fbafc67dcffd0c5e93200d86e5af
       size: 687
     outs:
     - path: data/X_test.csv
-      md5: 0cdb1d69f842bb1a5b0380fdce9bd420
-      size: 15056
+      md5: 07f4e3a1ba1a19c8a09dc4a336d5d4a7
+      size: 14948
     - path: data/X_train.csv
-      md5: 7e89db0049d65e2b462ee86f0f390d9a
-      size: 43903
+      md5: 4c06ab267a2ecd8027cb6f488c525843
+      size: 43665
     - path: data/y_test.csv
       md5: db085912f19bdc5787bb1121aefdf041
       size: 171
@@ -159,7 +159,7 @@ stages:
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
     deps:
     - path: data/database.db
-      md5: 976a3f1e30b07923ad0902d972fd17b1
+      md5: 15e1b3c6bdc4804d69558ddd4a306931
       size: 35729408
     - path: src/data-analysis/account.py
       md5: da39556f9e466f269eff30c4c133872b
@@ -205,8 +205,8 @@ stages:
       md5: 6edeb6522b0d38376840892ddc4f44b6
       size: 37530
     - path: analysis_plots/loan_amount_over_time.png
-      md5: ea4da71d7f2944fbbda3692209b6dbf1
-      size: 49248
+      md5: 483d2ea4118551f070bd44645ea0144e
+      size: 49354
     - path: analysis_plots/number_clients_per_decade_birth.png
       md5: 1602baba3620c5f25791b9072573ddfd
       size: 22419
@@ -249,13 +249,13 @@ stages:
       size: 340
     outs:
     - path: data/database.db
-      md5: 976a3f1e30b07923ad0902d972fd17b1
+      md5: 15e1b3c6bdc4804d69558ddd4a306931
       size: 35729408
   unify-data:
     cmd: python3 src/unify_data.py
     deps:
     - path: data/database.db
-      md5: 976a3f1e30b07923ad0902d972fd17b1
+      md5: 15e1b3c6bdc4804d69558ddd4a306931
       size: 35729408
     - path: src/unify_data.py
       md5: 552b1849fa91d7457be097157e64a65d
@@ -284,22 +284,22 @@ stages:
       md5: 24fff7b9c50f41c54a1c9db20c7d8554
       size: 56690
     - path: src/data-cleaning/missing_data.py
-      md5: c7b2d259dad4485541a13ab2039c8cdc
-      size: 154
+      md5: 6feaf5641bcd2138c586302266284afe
+      size: 790
     outs:
     - path: data/clean_data1.csv
-      md5: e6af8fe9d8b9ea18c43f0486da4d71c5
-      size: 57898
+      md5: f623e4ff116950ed658e1e78bb1b8d9e
+      size: 57558
   clean-outliers:
     cmd: python3 src/data-cleaning/outliers.py
     deps:
     - path: data/clean_data1.csv
-      md5: e6af8fe9d8b9ea18c43f0486da4d71c5
-      size: 57898
+      md5: f623e4ff116950ed658e1e78bb1b8d9e
+      size: 57558
     - path: src/data-cleaning/outliers.py
       md5: 662e1a767e1816c2cfcf51c7020d029e
       size: 153
     outs:
     - path: data/clean_data.csv
-      md5: 6ff909ae6329e06b319e73fda3204cdb
-      size: 59113
+      md5: 5bd14e4fba1c704504b13a200ff21ca5
+      size: 58773
