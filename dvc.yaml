@@ -42,11 +42,18 @@ stages:
     - src/data-cleaning/outliers.py
     outs:
     - data/clean_data.csv
-  split-data:
-    cmd: python3 src/split_data.py
+  transform-data:
+    cmd: python3 src/data_transformation.py
     deps:
     - data/clean_data.csv
-    - src/split_data.py
+    - src/data_transformation.py
+    outs:
+    - data/prepared_data.csv 
+  sample-data:
+    cmd: python3 src/sample_data.py
+    deps:
+    - data/prepared_data.csv
+    - src/sample_data.py
     outs:
     - data/X_test.csv
     - data/X_train.csv

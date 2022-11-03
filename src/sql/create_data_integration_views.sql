@@ -9,8 +9,8 @@ SELECT id, districtId, sex,
     END AS birthday
 FROM (SELECT id, districtId, birthNumber,
         CASE WHEN substr(birthNumber,3,2) > '50'
-        THEN 'female'
-        ELSE 'male'
+        THEN 0  -- female
+        ELSE 1  -- male
         END AS sex
     FROM client);
 

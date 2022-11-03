@@ -35,7 +35,7 @@ GROUP BY accountId
 HAVING date=MAX(DATE);
 
 -- find transactions whose date is lower than loanDate
--- find baance of the row where the date equal to maximum
+-- find balance of the row where the date equal to maximum
 
 DROP VIEW IF EXISTS account_view;
 CREATE VIEW account_view AS

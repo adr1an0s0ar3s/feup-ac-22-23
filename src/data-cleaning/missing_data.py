@@ -15,7 +15,7 @@ def main():
     df['hasCard'] = df['ownerCardType'].apply(lambda x: False if pd.isna(x) else True)
     df = df.drop('ownerCardType', axis=1)
 
-    df.to_csv('data/clean_data1.csv')
+    df.to_csv('data/clean_data1.csv', index=False)
 
 if __name__ == "__main__":
     main()

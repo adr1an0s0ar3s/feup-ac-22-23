@@ -13,7 +13,7 @@ def main():
 
     # Create model
     model = DecisionTreeClassifier(max_depth=params['max_depth'])
-
+    
     # Train model
     model.fit(X_train, y_train)
 
