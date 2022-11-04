@@ -29,13 +29,16 @@ GROUP BY accountId;
 
 DROP VIEW IF EXISTS account_balance_view;
 CREATE VIEW account_balance_view AS
-SELECT A.accountId as id, AVG(A.balance) as balance
-FROM transDev as A
+SELECT accountId as id, balance
+FROM transDev JOIN (
+    SELECT A.accountId, MAX(A.date) as lastTransDate
+    FROM transDev AS A JOIN loanDev AS B USING (accountId)
+    WHERE A.date <= B.date
+    GROUP BY A.accountId
+) USING (accountId)
+WHERE date = lastTransDate
 GROUP BY accountId
-HAVING date=MAX(DATE);
-
--- find transactions whose date is lower than loanDate
--- find balance of the row where the date equal to maximum
+HAVING MAX(id);
 
 DROP VIEW IF EXISTS account_view;
 CREATE VIEW account_view AS
