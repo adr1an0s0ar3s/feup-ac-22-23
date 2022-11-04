@@ -84,34 +84,37 @@ stages:
   split-data:
     cmd: python3 src/split_data.py
     deps:
-    - path: data/clean_data.csv
-      md5: 5bd14e4fba1c704504b13a200ff21ca5
-      size: 58773
+    - path: data/X.csv
+      md5: 5666fa636b828345cb7142e4b8fa4dca
+      size: 54769
+    - path: data/y.csv
+      md5: 740df0bdb629d6659829f52a51446f60
+      size: 1135
     - path: src/split_data.py
-      md5: 5798fbafc67dcffd0c5e93200d86e5af
-      size: 687
+      md5: b6d3a25a45f5a43954a3eaf2aee49093
+      size: 581
     outs:
     - path: data/X_test.csv
-      md5: 07f4e3a1ba1a19c8a09dc4a336d5d4a7
-      size: 14948
+      md5: 6edcc1d924ab9752cbf806bbe54f4516
+      size: 13857
     - path: data/X_train.csv
-      md5: 4c06ab267a2ecd8027cb6f488c525843
-      size: 43665
+      md5: 16504bcea9edc1935903a83e93c6f203
+      size: 41151
     - path: data/y_test.csv
-      md5: db085912f19bdc5787bb1121aefdf041
-      size: 171
+      md5: c0e530528c64a06e3573ae633c4793cc
+      size: 289
     - path: data/y_train.csv
-      md5: 39f192e39e2e14596d362e78560f22df
-      size: 499
+      md5: d23e1bfb223d5896a757808dca989937
+      size: 853
   train-model:
     cmd: python3 src/train_model.py
     deps:
     - path: data/X_test.csv
-      md5: c8264565e3207cd96118b9163c9c8648
-      size: 25295
+      md5: 6edcc1d924ab9752cbf806bbe54f4516
+      size: 13857
     - path: data/X_train.csv
-      md5: 0bc9f02ee21fc871ed227b01f109820f
-      size: 76633
+      md5: 16504bcea9edc1935903a83e93c6f203
+      size: 41151
     - path: data/y_test.csv
       md5: c0e530528c64a06e3573ae633c4793cc
       size: 289
@@ -124,20 +127,20 @@ stages:
     params:
       params.yaml:
         train:
-          max_depth: 50
+          max_depth: 100
     outs:
     - path: data/model.joblib
-      md5: 85707c6c3b18faf8a634191c96df1813
-      size: 9065
+      md5: 999b5cbf998452300dc966585cda353a
+      size: 10297
   test-model:
     cmd: python3 src/test_model.py
     deps:
     - path: data/X_test.csv
-      md5: c8264565e3207cd96118b9163c9c8648
-      size: 25295
+      md5: 6edcc1d924ab9752cbf806bbe54f4516
+      size: 13857
     - path: data/model.joblib
-      md5: 85707c6c3b18faf8a634191c96df1813
-      size: 9065
+      md5: 999b5cbf998452300dc966585cda353a
+      size: 10297
     - path: data/y_test.csv
       md5: c0e530528c64a06e3573ae633c4793cc
       size: 289
@@ -146,14 +149,14 @@ stages:
       size: 1933
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: b89e97765669ef75a73268672ba27db6
+      md5: 2c8ae98332c9adedab30a109c56308de
       size: 280
     - path: evaluation/plots/roc.json
-      md5: 544cb8b624f4254aee45d65298990021
-      size: 346
+      md5: 7ada49a0ab64ce2f9d2d4d0034bbd6a8
+      size: 345
     - path: metrics/results.json
-      md5: f2b10baf8313332842b09d57c8ac91da
-      size: 146
+      md5: 313d5edb89d9551f1174a7520a11753c
+      size: 147
   plot-data:
     cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
@@ -205,8 +208,8 @@ stages:
       md5: 6edeb6522b0d38376840892ddc4f44b6
       size: 37530
     - path: analysis_plots/loan_amount_over_time.png
-      md5: e749f55df7a0805eda5fd68bcc5e9425
-      size: 49366
+      md5: d6e098d3d593777891cebaa9474a2586
+      size: 49275
     - path: analysis_plots/number_clients_per_decade_birth.png
       md5: 1602baba3620c5f25791b9072573ddfd
       size: 22419
@@ -310,21 +313,15 @@ stages:
       md5: dca5d506b49f6fde6d2e332d81f5cbf1
       size: 55487
     - path: src/sample_data.py
-      md5: 093702dc60dc173b919f0de6e167dc13
-      size: 1132
+      md5: 6f63b2dd5af32553bbbc76c65551d330
+      size: 648
     outs:
-    - path: data/X_test.csv
-      md5: c8264565e3207cd96118b9163c9c8648
-      size: 25295
-    - path: data/X_train.csv
-      md5: 0bc9f02ee21fc871ed227b01f109820f
-      size: 76633
-    - path: data/y_test.csv
-      md5: c0e530528c64a06e3573ae633c4793cc
-      size: 289
-    - path: data/y_train.csv
-      md5: d23e1bfb223d5896a757808dca989937
-      size: 853
+    - path: data/sampled_X.csv
+      md5: 6896d76341dde2975534f7c37dccfd09
+      size: 101291
+    - path: data/sampled_y.csv
+      md5: 740df0bdb629d6659829f52a51446f60
+      size: 1135
   transform-data:
     cmd: python3 src/data_transformation.py
     deps:
@@ -338,3 +335,22 @@ stages:
     - path: data/prepared_data.csv
       md5: dca5d506b49f6fde6d2e332d81f5cbf1
       size: 55487
+  select-features:
+    cmd: python3 src/feature_selection.py
+    deps:
+    - path: data/sampled_X.csv
+      md5: 6896d76341dde2975534f7c37dccfd09
+      size: 101291
+    - path: data/sampled_y.csv
+      md5: 740df0bdb629d6659829f52a51446f60
+      size: 1135
+    - path: src/feature_selection.py
+      md5: a560892b6aef8c65e1e8b2c66fc430cc
+      size: 662
+    outs:
+    - path: data/X.csv
+      md5: 5666fa636b828345cb7142e4b8fa4dca
+      size: 54769
+    - path: data/y.csv
+      md5: 740df0bdb629d6659829f52a51446f60
+      size: 1135

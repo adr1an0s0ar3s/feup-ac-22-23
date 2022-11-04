@@ -1,2 +1,2 @@
 train:
-  max_depth: 50
+  max_depth: 100
