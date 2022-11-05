@@ -55,15 +55,6 @@ stages:
     - data/prepared_data.csv
     - src/sample_data.py
     outs:
-    - data/sampled_X.csv
-    - data/sampled_y.csv
-  select-features:
-    cmd: python3 src/feature_selection.py
-    deps:
-    - data/sampled_X.csv
-    - data/sampled_y.csv
-    - src/feature_selection.py
-    outs:
     - data/X.csv
     - data/y.csv
   split-data:
@@ -73,10 +64,20 @@ stages:
     - data/y.csv
     - src/split_data.py
     outs:
-    - data/X_test.csv
-    - data/X_train.csv
+    - data/X_test_all_features.csv
+    - data/X_train_all_features.csv
     - data/y_test.csv
     - data/y_train.csv
+  select-features:
+    cmd: python3 src/feature_selection.py
+    deps:
+        - data/X_test_all_features.csv
+        - data/X_train_all_features.csv
+        - data/y_train.csv
+        - src/feature_selection.py
+    outs:
+    - data/X_test.csv
+    - data/X_train.csv
   train-model:
     cmd: python3 src/train_model.py
     deps:

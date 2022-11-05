@@ -7,8 +7,8 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, shuffle=False, stratify=None)
     
     # Save split data
-    X_train.to_csv('data/X_train.csv', index=False)
-    X_test.to_csv('data/X_test.csv', index=False)
+    X_train.to_csv('data/X_train_all_features.csv', index=False)
+    X_test.to_csv('data/X_test_all_features.csv', index=False)
     y_train.to_csv('data/y_train.csv', index=False)
     y_test.to_csv('data/y_test.csv', index=False)
 

@@ -16,3 +16,5 @@
 /y.csv
 /sampled_X.csv
 /sampled_y.csv
+/X_test_all_features.csv
+/X_train_all_features.csv

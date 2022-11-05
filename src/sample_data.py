@@ -20,8 +20,8 @@ def main():
 
     X, y = sample(X, y)
     X, y = sort(X, y)
-    X.to_csv('data/sampled_X.csv', index=False)
-    y.to_csv('data/sampled_y.csv', index=False)
+    X.to_csv('data/X.csv', index=False)
+    y.to_csv('data/y.csv', index=False)
 
 if  __name__ == '__main__':
     main()
