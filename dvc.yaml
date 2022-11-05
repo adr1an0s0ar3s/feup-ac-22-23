@@ -78,6 +78,8 @@ stages:
     outs:
     - data/X_test.csv
     - data/X_train.csv
+    params:
+    - feature_selection
   train-model:
     cmd: python3 src/train_model.py
     deps:

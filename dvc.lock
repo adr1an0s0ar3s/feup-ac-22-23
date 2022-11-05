@@ -110,11 +110,11 @@ stages:
     cmd: python3 src/train_model.py
     deps:
     - path: data/X_test.csv
-      md5: c89356ff308801ee5d044db93b5878dd
-      size: 7886
+      md5: 9eb5d3949bd3ed9856f8f87c7768b947
+      size: 33118
     - path: data/X_train.csv
-      md5: 8888b9202957a390606dd8cf061f9390
-      size: 23977
+      md5: d960bdf2f283851933915db2ecfbf19b
+      size: 102000
     - path: data/y_test.csv
       md5: c0e530528c64a06e3573ae633c4793cc
       size: 289
@@ -122,25 +122,24 @@ stages:
       md5: d23e1bfb223d5896a757808dca989937
       size: 853
     - path: src/train_model.py
-      md5: 9c41b689cc8a7c3be7bbbcd5b7eb8708
-      size: 809
+      md5: aeb250de8ad6d4089bfcdda6962d6196
+      size: 870
     params:
       params.yaml:
         train:
-          max_depth: 100
     outs:
     - path: data/model.joblib
-      md5: b04fb216163fcc4097aeda1c7119c3ac
-      size: 11753
+      md5: 1917ecdb44a45c02cc84e9a0a934a3d1
+      size: 8489
   test-model:
     cmd: python3 src/test_model.py
     deps:
     - path: data/X_test.csv
-      md5: c89356ff308801ee5d044db93b5878dd
-      size: 7886
+      md5: 9eb5d3949bd3ed9856f8f87c7768b947
+      size: 33118
     - path: data/model.joblib
-      md5: b04fb216163fcc4097aeda1c7119c3ac
-      size: 11753
+      md5: 1917ecdb44a45c02cc84e9a0a934a3d1
+      size: 8489
     - path: data/y_test.csv
       md5: c0e530528c64a06e3573ae633c4793cc
       size: 289
@@ -149,14 +148,14 @@ stages:
       size: 1933
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: 6e5bac8e7e1baee36e50e4d73bfd0f08
-      size: 280
+      md5: a326944cc42ac02cff883df798cd6a59
+      size: 266
     - path: evaluation/plots/roc.json
-      md5: d7de862e9bb497dfe9bd4a91756824cf
-      size: 346
+      md5: 3a766babfdc3a326f0888e7591423174
+      size: 345
     - path: metrics/results.json
-      md5: 0cae1a6eb2cada796b24ae385233adcc
-      size: 148
+      md5: 889bb09948f16144f04468de548e2026
+      size: 134
   plot-data:
     cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
@@ -208,8 +207,8 @@ stages:
       md5: 6edeb6522b0d38376840892ddc4f44b6
       size: 37530
     - path: analysis_plots/loan_amount_over_time.png
-      md5: c9bdb7760fa210ab706bbcacb30cac24
-      size: 49313
+      md5: cc02fc4150ac9ee4b21c8a688229c33e
+      size: 49385
     - path: analysis_plots/number_clients_per_decade_birth.png
       md5: 1602baba3620c5f25791b9072573ddfd
       size: 22419
@@ -348,12 +347,17 @@ stages:
       md5: d23e1bfb223d5896a757808dca989937
       size: 853
     - path: src/feature_selection.py
-      md5: e35fc30cc5ef5337f9efb0d05c4b60b6
-      size: 950
+      md5: e8c69fdf79638c22192bd478038a98ee
+      size: 1890
+    params:
+      params.yaml:
+        feature_selection:
+          methods:
+          - variance
     outs:
     - path: data/X_test.csv
-      md5: c89356ff308801ee5d044db93b5878dd
-      size: 7886
+      md5: 9eb5d3949bd3ed9856f8f87c7768b947
+      size: 33118
     - path: data/X_train.csv
-      md5: 8888b9202957a390606dd8cf061f9390
-      size: 23977
+      md5: d960bdf2f283851933915db2ecfbf19b
+      size: 102000

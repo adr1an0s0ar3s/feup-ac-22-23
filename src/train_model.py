@@ -9,10 +9,12 @@ def main():
     X_train, y_train = pd.read_csv('data/X_train.csv'), pd.read_csv('data/y_train.csv')
 
     # Load parameters (https://dvc.org/doc/command-reference/params)
-    params = dvc.api.params_show()['train']
+    params = dvc.api.params_show().get('train', {})
+    if params == None:
+        params = {}
 
     # Create model
-    model = DecisionTreeClassifier(max_depth=params['max_depth'])
+    model = DecisionTreeClassifier(max_depth=params.get('max_depth', None))
     
     # Train model
     model.fit(X_train, y_train)
