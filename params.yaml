@@ -1,3 +1,3 @@
 train:
 feature_selection:
-  methods: ['variance']
+  methods: ['kbest']

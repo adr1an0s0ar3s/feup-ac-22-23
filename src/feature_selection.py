@@ -42,7 +42,7 @@ def select(X_train, y_train, X_test, selector):
 def main():
     X_test = pd.read_csv('data/X_test_all_features.csv')
     X_train = pd.read_csv('data/X_train_all_features.csv')
-    y_train = pd.read_csv('data/y_train.csv')
+    y_train = pd.read_csv('data/y_train_not_sampled.csv')
 
     params = dvc.api.params_show()['feature_selection']
     
@@ -51,7 +51,7 @@ def main():
             print("Applying method" + method)
             X_train, X_test = select(X_train, y_train, X_test, selectors[method])
 
-    X_train.to_csv('data/X_train.csv', index=False)
+    X_train.to_csv('data/X_train_not_sampled.csv', index=False)
     X_test.to_csv('data/X_test.csv', index=False)
 
 if __name__ == '__main__':
