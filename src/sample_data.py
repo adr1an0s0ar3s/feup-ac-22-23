@@ -13,15 +13,13 @@ def sort(X, y):
 
 def main():
     # Read processed data
-    df = pd.read_csv('data/prepared_data.csv')
-
-    # Obtain independent and target variables
-    X, y = df.drop('status', axis=1), df['status']
+    X = pd.read_csv('data/X_train_not_sampled.csv')
+    y = pd.read_csv('data/y_train_not_sampled.csv')
 
     X, y = sample(X, y)
     X, y = sort(X, y)
-    X.to_csv('data/X.csv', index=False)
-    y.to_csv('data/y.csv', index=False)
+    X.to_csv('data/X_train_all_features.csv', index=False)
+    y.to_csv('data/y_train.csv', index=False)
 
 if  __name__ == '__main__':
     main()
