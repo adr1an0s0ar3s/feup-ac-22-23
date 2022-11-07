@@ -1,31 +1,38 @@
 import pandas as pd
 import numpy as np
-from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import VarianceThreshold, SelectKBest, SelectPercentile, RFECV, SequentialFeatureSelector
 import dvc.api
 
 
-base_estimator = SVC(kernel="linear")
-selectors = {
+base_estimator = LogisticRegression()
+
+filters = {
     'variance': VarianceThreshold(),
     'kbest': SelectKBest(),
+    'kbest-chi2': SelectKBest(score_func='chi2'),
+    'kbest-f_regression': SelectKBest(score_func='f_regression'),
     'percentile': SelectPercentile(),
+}
+
+wrappers = {
+    
     'rfecv': RFECV(
             estimator=base_estimator,
             step=1,
             cv=StratifiedKFold(2),
-            scoring="accuracy",
+            scoring='accuracy',
             min_features_to_select=1,
         ),
     'forward': SequentialFeatureSelector(
             estimator=base_estimator,
-            n_features_to_select=10,
+            n_features_to_select='auto',
             direction='forward'
     ),
     'backward': SequentialFeatureSelector(
             estimator=base_estimator,
-            n_features_to_select=10,
+            n_features_to_select='auto',
             direction='backward'
     )
 }
@@ -46,10 +53,11 @@ def main():
 
     params = dvc.api.params_show()['feature_selection']
     
-    for method in params['methods']:
-        if method in selectors:
-            print("Applying method" + method)
-            X_train, X_test = select(X_train, y_train, X_test, selectors[method])
+    if params['filter'] != 'none':
+        X_train, X_test = select(X_train, y_train, X_test, filters[params['filter']])
+    
+    if params['wrapper'] != 'none':
+        X_train, X_test = select(X_train, y_train, X_test, wrappers[params['wrapper']])
 
     X_train.to_csv('data/X_train_not_sampled.csv', index=False)
     X_test.to_csv('data/X_test.csv', index=False)
