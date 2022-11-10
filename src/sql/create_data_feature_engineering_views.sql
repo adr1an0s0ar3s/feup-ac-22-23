@@ -82,6 +82,32 @@ SELECT * FROM cardDev_di_view;
 
 -- ============================= TRANS_DEV VIEW =============================
 
+-- TODO: Remove leakage
+SELECT A.id, maxWithdrawal, MAX(credit) as maxCredit, (maxWithdrawal+MAX(credit)) as maxDistance FROM (
+    (SELECT account.id, MAX(withdrawal) as maxWithdrawal FROM account 
+        JOIN (SELECT accountId as id, amount as withdrawal FROM transDev WHERE type='withdrawal' or type='withdrawal in cash') as W on (account.id=W.id)
+        GROUP BY (account.id)) as A
+    JOIN
+    (SELECT accountId as id, amount as credit FROM transDev WHERE type='credit') as C on (A.id=C.id)
+)
+GROUP BY (A.id);
+
+SELECT id, avgSanctionInterest, status FROM loanDev 
+JOIN (
+    SELECT accountId, AVG(amount) as avgSanctionInterest, date FROM transDev WHERE k_symbol='sanction interest if negative balance'
+    GROUP BY (accountId)
+) as A ON (loanDev.accountId=A.accountId)
+GROUP BY (id)
+HAVING (A.date < loanDev.date);
+
+SELECT id, accountId, status FROM loanDev WHERE accountId IN (
+    SELECT accountId from (
+        SELECT accountId, amount, COUNT(*) as count FROM transDev 
+        WHERE operation='collection from another bank' and transDev.date < loanDev.date
+        GROUP BY accountId, amount
+    ) where count > 3);
+
+
 DROP VIEW IF EXISTS transDev_view;
 CREATE VIEW transDev_view AS 
 SELECT * FROM transDev_di_view;
