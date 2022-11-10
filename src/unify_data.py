@@ -12,6 +12,17 @@ def main():
         JOIN district_view ON district_view.id = account_view.districtId'
     , con)
 
+    trans_df = pd.read_sql_query("SELECT * FROM ( \
+        select id, accountId, amount as credit, null as withdrawal from transDev where type='credit' \
+        UNION \
+        select id, accountId, null as credit, amount as withdrawal from transDev where type='withdrawal' or type='withdrawal in cash' \
+        );"
+    , con)
+
+    trans_df['amount'] = trans_df['credit'] if trans_df['withdrawal'].isna else -trans_df['withdrawal']
+    trans_df = trans_df.groupby(['accountId']).apply(lambda x: x.quantile(0.75) - x.quantile(0.25))
+    df['transactionAmountIQR'] = trans_df['amount']
+    df['transactionAmountIQR'] = df['transactionAmountIQR'].fillna(df['transactionAmountIQR'].mean())
     df.to_csv('data/unified_data.csv', index=False)
 
 if  __name__ == '__main__':
