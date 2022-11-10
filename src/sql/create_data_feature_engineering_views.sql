@@ -17,7 +17,7 @@ WHERE type = "OWNER";
 
 DROP VIEW IF EXISTS client_num_transactions;
 CREATE VIEW client_num_transactions AS
-SELECT clientId, num_transactions
+SELECT clientId, CASE WHEN t.num_transactions IS null THEN 0 ELSE t.num_transactions END AS num_transactions
 FROM disp
 JOIN (
     SELECT accountId, COUNT(*) AS num_transactions
@@ -27,9 +27,9 @@ JOIN (
 
 DROP VIEW IF EXISTS client_num_neg_transactions;
 CREATE VIEW client_num_neg_transactions AS
-SELECT clientId, num_neg_transactions
+SELECT clientId, CASE WHEN t.num_neg_transactions IS null THEN 0 ELSE t.num_neg_transactions END AS num_neg_transactions
 FROM disp
-JOIN (
+LEFT JOIN (
     SELECT accountId, COUNT(*) AS num_neg_transactions
     FROM transDev
     WHERE balance < 0
