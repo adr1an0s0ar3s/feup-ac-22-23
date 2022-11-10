@@ -36,6 +36,17 @@ JOIN (
     GROUP BY accountId
 ) AS t ON t.accountId = disp.accountId;
 
+DROP VIEW IF EXISTS client_external_bank_transactions;
+CREATE VIEW client_external_bank_transactions AS
+SELECT clientId, CASE WHEN t.num_external_bank_transactions IS null THEN 0 ELSE t.num_external_bank_transactions END AS num_external_bank_transactions, t.num_external_bank_transactions IS NOT null AS has_external_bank_transactions
+FROM disp
+LEFT JOIN (
+    SELECT accountId, COUNT(*) AS num_external_bank_transactions
+    FROM transDev
+    WHERE operation = 'collection from another bank' OR operation = 'remittance to another bank'
+    GROUP BY accountId
+) AS t ON t.accountId = disp.accountId;
+
 DROP VIEW IF EXISTS client_view;
 CREATE VIEW client_view AS 
 SELECT * FROM client_di_view;
