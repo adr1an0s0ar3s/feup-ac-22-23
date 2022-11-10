@@ -114,6 +114,57 @@ SELECT * FROM cardDev_di_view;
 
 -- ============================= TRANS_DEV VIEW =============================
 
+DROP VIEW IF EXISTS number_withdrawal_view;
+CREATE VIEW number_withdrawal_view AS 
+
+SELECT accountId, COUNT(accountId) as n_withdrawal
+FROM transDev
+WHERE type = 'withdrawal' OR type = 'withdrawal in cash'
+GROUP BY accountId;
+
+DROP VIEW IF EXISTS number_credit_ops_view;
+CREATE VIEW number_credit_ops_view AS 
+
+SELECT accountId, COUNT(accountId) as n_credit_ops
+FROM transDev
+WHERE operation = 'credit in cash' OR operation = 'collection from another bank'
+GROUP BY accountId;
+
+DROP VIEW IF EXISTS prefered_withdrawal_view;
+CREATE VIEW prefered_withdrawal_view AS 
+
+SELECT accountId, 
+    SUM(CASE WHEN type = 'withdrawal' THEN 1 ELSE 0 END) n_withdrawal,
+    SUM(CASE WHEN type = 'withdrawal in cash' THEN 1 ELSE 0 END) n_withdrawal_cash
+FROM transDev
+GROUP BY accountId;
+
+-- TODO: Remove leakage
+SELECT A.id, maxWithdrawal, MAX(credit) as maxCredit, (maxWithdrawal+MAX(credit)) as maxDistance FROM (
+    (SELECT account.id, MAX(withdrawal) as maxWithdrawal FROM account 
+        JOIN (SELECT accountId as id, amount as withdrawal FROM transDev WHERE type='withdrawal' or type='withdrawal in cash') as W on (account.id=W.id)
+        GROUP BY (account.id)) as A
+    JOIN
+    (SELECT accountId as id, amount as credit FROM transDev WHERE type='credit') as C on (A.id=C.id)
+)
+GROUP BY (A.id);
+
+SELECT id, avgSanctionInterest, status FROM loanDev 
+JOIN (
+    SELECT accountId, AVG(amount) as avgSanctionInterest, date FROM transDev WHERE k_symbol='sanction interest if negative balance'
+    GROUP BY (accountId)
+) as A ON (loanDev.accountId=A.accountId)
+GROUP BY (id)
+HAVING (A.date < loanDev.date);
+
+SELECT id, accountId, status FROM loanDev WHERE accountId IN (
+    SELECT accountId from (
+        SELECT accountId, amount, COUNT(*) as count FROM transDev 
+        WHERE operation='collection from another bank' and transDev.date < loanDev.date
+        GROUP BY accountId, amount
+    ) where count > 3);
+
+
 DROP VIEW IF EXISTS transDev_view;
 CREATE VIEW transDev_view AS 
 SELECT * FROM transDev_di_view;
