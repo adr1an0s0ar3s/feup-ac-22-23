@@ -114,6 +114,31 @@ SELECT * FROM cardDev_di_view;
 
 -- ============================= TRANS_DEV VIEW =============================
 
+DROP VIEW IF EXISTS number_withdrawal_view;
+CREATE VIEW number_withdrawal_view AS 
+
+SELECT accountId, COUNT(accountId) as n_withdrawal
+FROM transDev
+WHERE type = 'withdrawal' OR type = 'withdrawal in cash'
+GROUP BY accountId;
+
+DROP VIEW IF EXISTS number_credit_ops_view;
+CREATE VIEW number_credit_ops_view AS 
+
+SELECT accountId, COUNT(accountId) as n_credit_ops
+FROM transDev
+WHERE operation = 'credit in cash' OR operation = 'collection from another bank'
+GROUP BY accountId;
+
+DROP VIEW IF EXISTS prefered_withdrawal_view;
+CREATE VIEW prefered_withdrawal_view AS 
+
+SELECT accountId, 
+    SUM(CASE WHEN type = 'withdrawal' THEN 1 ELSE 0 END) n_withdrawal,
+    SUM(CASE WHEN type = 'withdrawal in cash' THEN 1 ELSE 0 END) n_withdrawal_cash
+FROM transDev
+GROUP BY accountId;
+
 -- TODO: Remove leakage
 SELECT A.id, maxWithdrawal, MAX(credit) as maxCredit, (maxWithdrawal+MAX(credit)) as maxDistance FROM (
     (SELECT account.id, MAX(withdrawal) as maxWithdrawal FROM account 
