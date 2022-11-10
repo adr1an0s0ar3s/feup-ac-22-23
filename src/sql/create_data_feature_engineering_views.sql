@@ -114,6 +114,29 @@ SELECT * FROM cardDev_di_view;
 
 -- ============================= TRANS_DEV VIEW =============================
 
+DROP VIEW IF EXISTS median_amount_view;
+CREATE VIEW median_amount_view AS
+
+SELECT accountId, 
+    CASE WHEN count%2=0 THEN
+        0.5 * substr(string_list, middle-10, 10) + 0.5 * substr(string_list, middle, 10)
+    ELSE
+        1.0 * substr(string_list, middle, 10)
+    END AS median_amount
+FROM (
+    SELECT accountId, 
+        group_concat(value_string,"") AS string_list,
+        count() AS count, 
+        1 + 10*(count()/2) AS middle
+    FROM (
+        SELECT accountId, 
+            printf('%010d',amount) AS value_string
+        FROM [transDev]
+        ORDER BY accountId,value_string
+    )
+    GROUP BY accountId
+);
+
 DROP VIEW IF EXISTS number_withdrawal_view;
 CREATE VIEW number_withdrawal_view AS 
 
