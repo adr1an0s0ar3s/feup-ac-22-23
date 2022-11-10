@@ -17,7 +17,7 @@ WHERE type = "OWNER";
 
 DROP VIEW IF EXISTS client_num_transactions;
 CREATE VIEW client_num_transactions AS
-SELECT clientId, num_transactions
+SELECT clientId, CASE WHEN t.num_transactions IS null THEN 0 ELSE t.num_transactions END AS num_transactions
 FROM disp
 JOIN (
     SELECT accountId, COUNT(*) AS num_transactions
@@ -27,9 +27,9 @@ JOIN (
 
 DROP VIEW IF EXISTS client_num_neg_transactions;
 CREATE VIEW client_num_neg_transactions AS
-SELECT clientId, num_neg_transactions
+SELECT clientId, CASE WHEN t.num_neg_transactions IS null THEN 0 ELSE t.num_neg_transactions END AS num_neg_transactions
 FROM disp
-JOIN (
+LEFT JOIN (
     SELECT accountId, COUNT(*) AS num_neg_transactions
     FROM transDev
     WHERE balance < 0
@@ -113,6 +113,31 @@ CREATE VIEW cardDev_view AS
 SELECT * FROM cardDev_di_view;
 
 -- ============================= TRANS_DEV VIEW =============================
+
+DROP VIEW IF EXISTS number_withdrawal_view;
+CREATE VIEW number_withdrawal_view AS 
+
+SELECT accountId, COUNT(accountId) as n_withdrawal
+FROM transDev
+WHERE type = 'withdrawal' OR type = 'withdrawal in cash'
+GROUP BY accountId;
+
+DROP VIEW IF EXISTS number_credit_ops_view;
+CREATE VIEW number_credit_ops_view AS 
+
+SELECT accountId, COUNT(accountId) as n_credit_ops
+FROM transDev
+WHERE operation = 'credit in cash' OR operation = 'collection from another bank'
+GROUP BY accountId;
+
+DROP VIEW IF EXISTS prefered_withdrawal_view;
+CREATE VIEW prefered_withdrawal_view AS 
+
+SELECT accountId, 
+    SUM(CASE WHEN type = 'withdrawal' THEN 1 ELSE 0 END) n_withdrawal,
+    SUM(CASE WHEN type = 'withdrawal in cash' THEN 1 ELSE 0 END) n_withdrawal_cash
+FROM transDev
+GROUP BY accountId;
 
 -- TODO: Remove leakage
 DROP VIEW IF EXISTS maxTransactionDistance_view;
