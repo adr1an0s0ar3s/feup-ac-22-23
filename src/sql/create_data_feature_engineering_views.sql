@@ -15,6 +15,16 @@ FROM disp_view
 JOIN client_view ON disp_view.clientId = client_view.id
 WHERE type = "OWNER";
 
+DROP VIEW IF EXISTS client_num_transactions;
+CREATE VIEW client_num_transactions AS
+SELECT clientId, num_transactions
+FROM (
+    SELECT accountId, COUNT(*) AS num_transactions
+    FROM transDev
+    GROUP BY accountId
+) AS t
+JOIN disp ON t.accountId = disp.accountId;
+
 DROP VIEW IF EXISTS client_view;
 CREATE VIEW client_view AS 
 SELECT * FROM client_di_view;
