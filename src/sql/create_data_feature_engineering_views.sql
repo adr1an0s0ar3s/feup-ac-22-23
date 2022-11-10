@@ -18,12 +18,23 @@ WHERE type = "OWNER";
 DROP VIEW IF EXISTS client_num_transactions;
 CREATE VIEW client_num_transactions AS
 SELECT clientId, num_transactions
-FROM (
+FROM disp
+JOIN (
     SELECT accountId, COUNT(*) AS num_transactions
     FROM transDev
     GROUP BY accountId
-) AS t
-JOIN disp ON t.accountId = disp.accountId;
+) AS t ON t.accountId = disp.accountId;
+
+DROP VIEW IF EXISTS client_num_neg_transactions;
+CREATE VIEW client_num_neg_transactions AS
+SELECT clientId, num_neg_transactions
+FROM disp
+JOIN (
+    SELECT accountId, COUNT(*) AS num_neg_transactions
+    FROM transDev
+    WHERE balance < 0
+    GROUP BY accountId
+) AS t ON t.accountId = disp.accountId;
 
 DROP VIEW IF EXISTS client_view;
 CREATE VIEW client_view AS 
