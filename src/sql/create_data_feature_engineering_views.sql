@@ -116,7 +116,6 @@ SELECT * FROM cardDev_di_view;
 
 DROP VIEW IF EXISTS median_amount_view;
 CREATE VIEW median_amount_view AS
-
 SELECT accountId, 
     CASE WHEN count%2=0 THEN
         0.5 * substr(string_list, middle-10, 10) + 0.5 * substr(string_list, middle, 10)
@@ -139,7 +138,6 @@ FROM (
 
 DROP VIEW IF EXISTS number_withdrawal_view;
 CREATE VIEW number_withdrawal_view AS 
-
 SELECT accountId, COUNT(accountId) as n_withdrawal
 FROM transDev
 WHERE type = 'withdrawal' OR type = 'withdrawal in cash'
@@ -147,7 +145,6 @@ GROUP BY accountId;
 
 DROP VIEW IF EXISTS number_credit_ops_view;
 CREATE VIEW number_credit_ops_view AS 
-
 SELECT accountId, COUNT(accountId) as n_credit_ops
 FROM transDev
 WHERE operation = 'credit in cash' OR operation = 'collection from another bank'
@@ -155,7 +152,6 @@ GROUP BY accountId;
 
 DROP VIEW IF EXISTS prefered_withdrawal_view;
 CREATE VIEW prefered_withdrawal_view AS 
-
 SELECT accountId, 
     SUM(CASE WHEN type = 'withdrawal' THEN 1 ELSE 0 END) n_withdrawal,
     SUM(CASE WHEN type = 'withdrawal in cash' THEN 1 ELSE 0 END) n_withdrawal_cash
@@ -202,6 +198,33 @@ SELECT id, accountId, status FROM loanDev WHERE accountId IN (
         WHERE operation='collection from another bank' and transDev.date < loanDev.date
         GROUP BY accountId, amount
     ) where count > 3);
+
+DROP VIEW IF EXISTS sumAllTransactions_view;
+CREATE VIEW sumAllTransactions_view AS
+SELECT accountId AS id, SUM(amount) AS sumAllTransactions
+FROM (
+    SELECT id, accountId,
+        CASE WHEN type LIKE 'withdrawal%'
+        THEN -amount
+        ELSE amount
+        END AS amount
+    FROM transDev
+)
+GROUP BY accountId;
+
+DROP VIEW IF EXISTS insurancePayments_view;
+CREATE VIEW insurancePayments_view AS
+SELECT accountId AS id, COUNT(*) AS insurancePaymentsCount, AVG(amount) AS insurancePaymentsAverage
+FROM transDev
+WHERE k_symbol='insurrance payment'
+GROUP BY accountId;
+
+DROP VIEW IF EXISTS timesIntoNegativeBalance_view;
+CREATE VIEW timesIntoNegativeBalance_view AS
+SELECT accountId AS id, COUNT(*) AS timesIntoNegativeBalance
+FROM transDev
+WHERE balance < 0 AND balance + amount >= 0 AND type LIKE 'withdrawal%'
+GROUP BY accountId;
 
 DROP VIEW IF EXISTS transDev_view;
 CREATE VIEW transDev_view AS 
