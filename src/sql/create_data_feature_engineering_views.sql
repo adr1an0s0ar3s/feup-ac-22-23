@@ -244,7 +244,9 @@ WHERE accountId IN (
 DROP VIEW IF EXISTS loanDev_view;
 CREATE VIEW loanDev_view AS
 SELECT loanDev_di_view.id, accountId, date, duration, payments, amount, ratio,
-    maxWithdrawal, maxCredit, maxTransactionAmountDistance, 
+    IFNULL(maxWithdrawal, 0),
+    IFNULL(maxCredit, 0),
+    IFNULL(maxTransactionAmountDistance, 0),
     IFNULL(sumSanctionInterest, 0) AS sumSanctionInterest,
     IFNULL(avgSanctionInterest, 0) AS avgSanctionInterest, 
     IFNULL(hasStableIncome, false) AS hasStableIncome, 
