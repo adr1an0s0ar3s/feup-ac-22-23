@@ -1,4 +1,4 @@
 train:
 feature_selection:
-  filter: 'none'
-  wrapper: 'rfecv'
+  filter: 'kbest'
+  wrapper: 'none'

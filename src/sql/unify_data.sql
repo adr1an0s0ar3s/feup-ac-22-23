@@ -11,6 +11,24 @@
 
 -- To add: and transDev
 SELECT ownerSex, ownerBirthday, ownerCardType, frequency, account_view.date AS accountCreationDate, isShared, balance, loanDev_view.date AS loanDate, duration as loanDuration, payments as loanPayments, amount as loanAmount, ratio, districtName, region, nInhabitants, nMunicipalitiesSub499Inhabitants, nMunicipalities500to1999Inhabitants, nMunicipalities2000to9999Inhabitants, nMunicipalitiesOver10000Inhabitants, nCities, urbanInhabitantsRatio, averageSalary, unemploymentRate95, unemploymentRate96, nEnterpreneursPer1000Inhabitants, commitedCrimes95, commitedCrimes96, status
+medianAmount,
+sumAllTransactions,
+insurancePaymentsCount,
+insurancePaymentsAverage,
+timesIntoNegativeBalance,
+numTransactions,
+numTransactionsNegBalance,
+numExternalBankTransactions,
+withdrawalCount,
+cashWithdrawalCount, 
+withdrawalAnyMethodCount, 
+creditCount
+maxWithdrawal,
+maxCredit,
+maxTransactionAmountDistance,
+sumSanctionInterest,
+avgSanctionInterest, 
+hasStableIncome
 FROM loanDev_view
 JOIN account_view ON account_view.id = loanDev_view.accountId
 JOIN owners_sex_birthday_view ON owners_sex_birthday_view.accountId = account_view.id
