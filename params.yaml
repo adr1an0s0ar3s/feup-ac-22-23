@@ -1,4 +1,5 @@
-train:
+params: {}
+classifiers: ['dt', 'knn']
 feature_selection:
   filter: 'kbest'
   wrapper: 'none'
