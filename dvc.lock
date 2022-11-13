@@ -119,15 +119,20 @@ stages:
       md5: 7692e471554394e1e080fb147f77209e
       size: 839
     - path: src/train_model.py
-      md5: aeb250de8ad6d4089bfcdda6962d6196
-      size: 870
+      md5: 493ec0ea0034f904893493706924a37a
+      size: 2759
     params:
       params.yaml:
-        train:
+        classifiers:
+        - knn
+        params: {}
     outs:
     - path: data/model.joblib
-      md5: 28b1e85c76fc9eb5d019c6d213d6d928
-      size: 8041
+      md5: deaea719ac1ffcb1d00775ae62639ec9
+      size: 78678
+    - path: metrics/model_details.json
+      md5: 7eb1f111415c2bde65594ae72a07d0c0
+      size: 200
   test-model:
     cmd: python3 src/test_model.py
     deps:
@@ -135,8 +140,8 @@ stages:
       md5: 4cf82aed09e3410fee5409ee78e6c426
       size: 5424
     - path: data/model.joblib
-      md5: 28b1e85c76fc9eb5d019c6d213d6d928
-      size: 8041
+      md5: deaea719ac1ffcb1d00775ae62639ec9
+      size: 78678
     - path: data/y_test.csv
       md5: db085912f19bdc5787bb1121aefdf041
       size: 171
@@ -145,14 +150,14 @@ stages:
       size: 1933
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: a56f61e0c8124a7c5983a785c48a7239
-      size: 266
+      md5: ba3f432bcbd94dc10b472e18e40bde13
+      size: 7391
     - path: evaluation/plots/roc.json
-      md5: 47da2845d71a289e1d2e4574f7626e39
-      size: 331
+      md5: e91548f19e592dbe9f5dfde9718bc46e
+      size: 7080
     - path: metrics/results.json
-      md5: a232b943e0b62574b8fbc061df349f93
-      size: 135
+      md5: 5b487c47d7617181b139131858df0fe8
+      size: 122
   plot-data:
     cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py

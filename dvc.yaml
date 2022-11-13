@@ -91,7 +91,11 @@ stages:
     outs:
     - data/model.joblib
     params:
-    - train
+    - params
+    - classifiers
+    metrics:
+    - metrics/model_details.json:
+        cache: false
   test-model:
     cmd: python3 src/test_model.py
     deps:
