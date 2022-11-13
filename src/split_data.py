@@ -7,8 +7,15 @@ def main():
     # Obtain independent and target variables
     X, y = df.drop('status', axis=1), df['status']
 
+    max_test_size=0.40
+    test_size = 0.1
+    while test_size <= max_test_size:
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42, shuffle=False, stratify=None)
+        print(f"test_size={test_size:01f}: train={y_train.mean():02f} - test={y_test.mean():02f} -> diff={y_train.mean()-y_test.mean():02f} | (Target: {y.mean()})")
+        test_size += 0.01
+
     # Split into test and train data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, shuffle=False, stratify=None)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42, shuffle=False, stratify=None)
     
     # Save split data
     X_train.to_csv('data/X_train_all_features.csv', index=False)
