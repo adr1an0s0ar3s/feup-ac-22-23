@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import PassiveAggressiveClassifier, Perceptron, LogisticRegression, SGDClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import VarianceThreshold, SelectKBest, SelectPercentile, RFECV, SequentialFeatureSelector
 import dvc.api
-
 
 base_estimator = Perceptron()
 
@@ -17,7 +17,6 @@ filters = {
 }
 
 wrappers = {
-    
     'rfecv': RFECV(
             estimator=base_estimator,
             step=1,
@@ -36,8 +35,6 @@ wrappers = {
             direction='backward'
     )
 }
-
-
 
 def select(X_train, y_train, X_test, selector):
     selector.fit(X_train, np.ravel(y_train))

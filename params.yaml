@@ -1,5 +1,8 @@
 params: {}
-classifiers: ['dt', 'knn']
+classifiers:
+- dt
+- knn
+- rf
 feature_selection:
-  filter: 'variance'
-  wrapper: 'forward'
+  filter: kbest
+  wrapper: none

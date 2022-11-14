@@ -33,6 +33,14 @@ available_clfs = {
             'p': [1, 2],
             'metric': ['minkowski'],
         }
+    ),
+    'rf': (
+        RandomForestClassifier(),
+        {
+            'n_estimators': [5, 10, 25, 50, 100],
+            'criterion': ['gini', 'entropy', 'log_loss'],
+            'max_leaf_nodes': [None],
+        }
     )
 }
 
@@ -57,7 +65,7 @@ def main():
                 continue
 
             # Exhaustive search over specified parameter values for an estimator to find the best one
-            best_model = GridSearchCV(clf, param_grid, scoring='roc_auc', n_jobs=-1, refit=True, cv=StratifiedKFold(n_splits=5, shuffle=False))
+            best_model = GridSearchCV(clf, param_grid, scoring='roc_auc', n_jobs=-1, refit=True, cv=StratifiedKFold(n_splits=5, shuffle=False), verbose=1)
 
             # Train model
             best_model.fit(X_train, np.ravel(y_train))
@@ -70,7 +78,7 @@ def main():
     else:
 
         # Obtain classifier
-        model = available_clfs[clfs[0]][0]
+        model = available_clfs[input_clfs[0]][0]
 
         # Set parameters
         model.set_params(**params)        
