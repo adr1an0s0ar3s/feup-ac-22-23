@@ -1,5 +1,5 @@
 params: {}
 classifiers: ['dt', 'knn']
 feature_selection:
-  filter: 'kbest'
-  wrapper: 'none'
+  filter: 'variance'
+  wrapper: 'forward'

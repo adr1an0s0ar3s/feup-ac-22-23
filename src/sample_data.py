@@ -13,7 +13,7 @@ def main():
     y = pd.read_csv('data/y_train_not_sampled.csv')
 
     X, y = sample(X, y)
-    X.to_csv('data/X_train.csv', index=False)
+    X.to_csv('data/X_train_all_features.csv', index=False)
     y.to_csv('data/y_train.csv', index=False)
 
 if  __name__ == '__main__':

@@ -16,6 +16,7 @@ def main():
     
     df["districtName"] = LabelEncoder().fit_transform(df["districtName"])
 
+    # Roughly scale dataset
     scaler = StandardScaler().fit(df)
     scaled_df = pd.DataFrame(data=scaler.transform(df), columns=df.columns)
     scaled_df['status'] = df['status']
