@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 def convert_to_unix_timestamp(df, attribute):
     df[attribute] = df[attribute].apply(lambda x: "19" + str(x))
@@ -16,7 +16,11 @@ def main():
     
     df["districtName"] = LabelEncoder().fit_transform(df["districtName"])
 
-    df.to_csv('data/prepared_data.csv', index=False)
+    scaler = StandardScaler().fit(df)
+    scaled_df = pd.DataFrame(data=scaler.transform(df), columns=df.columns)
+    scaled_df['status'] = df['status']
+
+    scaled_df.to_csv('data/prepared_data.csv', index=False)
 
 if  __name__ == '__main__':
     main()
