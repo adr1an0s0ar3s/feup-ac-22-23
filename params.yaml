@@ -6,3 +6,4 @@ classifiers:
 feature_selection:
   filter: kbest
   wrapper: none
+  estimator: 'perceptron'

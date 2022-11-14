@@ -6,7 +6,12 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import VarianceThreshold, SelectKBest, SelectPercentile, RFECV, SequentialFeatureSelector
 import dvc.api
 
-base_estimator = Perceptron()
+estimators = {
+    'perceptron': Perceptron(),
+    'dt': DecisionTreeClassifier()
+}
+params = dvc.api.params_show()['feature_selection']
+base_estimator = estimators[params['estimator']]
 
 filters = {
     'variance': VarianceThreshold(threshold=0.5),
@@ -47,8 +52,6 @@ def main():
     X_test = pd.read_csv('data/X_test_all_features.csv')
     X_train = pd.read_csv('data/X_train_all_features.csv')
     y_train = pd.read_csv('data/y_train.csv')
-
-    params = dvc.api.params_show()['feature_selection']
     
     if params['filter'] != 'none':
         X_train, X_test = select(X_train, y_train, X_test, filters[params['filter']])
