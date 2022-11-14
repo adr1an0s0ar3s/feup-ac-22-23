@@ -1,19 +1,19 @@
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import PassiveAggressiveClassifier, Perceptron, LogisticRegression, SGDClassifier
 from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import VarianceThreshold, SelectKBest, SelectPercentile, RFECV, SequentialFeatureSelector
 import dvc.api
 
 
-base_estimator = LogisticRegression()
+base_estimator = Perceptron()
 
 filters = {
-    'variance': VarianceThreshold(),
+    'variance': VarianceThreshold(threshold=0.5),
     'kbest': SelectKBest(),
     'kbest-chi2': SelectKBest(score_func='chi2'),
     'kbest-f_regression': SelectKBest(score_func='f_regression'),
-    'percentile': SelectPercentile(),
+    'percentile': SelectPercentile(percentile=25),
 }
 
 wrappers = {
