@@ -88,36 +88,36 @@ stages:
       md5: 44a7f0d0750436cd3595621fc40a0056
       size: 335277
     - path: src/split_data.py
-      md5: 05aefa84cd13e8f6a247de3f7379bc66
+      md5: 4d520cea3c96c3589a26773aa342a4b7
       size: 1107
     outs:
     - path: data/X_test_all_features.csv
-      md5: dc810c39011d9bfe0eeca2274fe8a8a2
-      size: 109318
+      md5: e592b7b97ebdb87f6f1673a50d4ef7c7
+      size: 66592
     - path: data/X_train_not_sampled.csv
-      md5: e450e964e89a9561e7624b8c52977d49
-      size: 218987
+      md5: 879a310fcd68153a98abab204a8b7225
+      size: 261713
     - path: data/y_test.csv
-      md5: 86bc2efb42e8469518319e311df1c492
-      size: 225
+      md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
+      size: 139
     - path: data/y_train_not_sampled.csv
-      md5: 055beba85404061b1874688485c9df1a
-      size: 445
+      md5: ad20a8766930f7e0dd04bae58e772a57
+      size: 531
   train-model:
     cmd: python3 src/train_model.py
     deps:
     - path: data/X_test.csv
-      md5: 0f5ea3b1216f4883ce4108ac65f1dd5d
-      size: 21330
+      md5: e0a3adc8f07b3f733a8f958b19d86ac0
+      size: 13003
     - path: data/X_train.csv
-      md5: 4900a16dd7f72577c6c3971b742c9c5a
-      size: 73334
+      md5: 76db87cddbf4e370fedd90b63ac729f0
+      size: 86208
     - path: data/y_test.csv
-      md5: 86bc2efb42e8469518319e311df1c492
-      size: 225
+      md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
+      size: 139
     - path: data/y_train.csv
-      md5: 10f8ab5cb10bbde933de246585f42b79
-      size: 759
+      md5: 3043f97501976c316162dfd7ca2be46b
+      size: 891
     - path: src/train_model.py
       md5: 781231f8c927d8c88c90bdb16103fbe7
       size: 3075
@@ -130,8 +130,8 @@ stages:
         params: {}
     outs:
     - path: data/model.joblib
-      md5: 811a813550e75c6320e3d3b3e14361d3
-      size: 586105
+      md5: da051aace87609301f7dde3709bd20e2
+      size: 741508
     - path: metrics/model_details.json
       md5: 908412648097722eae4e8a5abcc5db77
       size: 443
@@ -139,27 +139,27 @@ stages:
     cmd: python3 src/test_model.py
     deps:
     - path: data/X_test.csv
-      md5: 0f5ea3b1216f4883ce4108ac65f1dd5d
-      size: 21330
+      md5: e0a3adc8f07b3f733a8f958b19d86ac0
+      size: 13003
     - path: data/model.joblib
-      md5: 811a813550e75c6320e3d3b3e14361d3
-      size: 586105
+      md5: da051aace87609301f7dde3709bd20e2
+      size: 741508
     - path: data/y_test.csv
-      md5: 86bc2efb42e8469518319e311df1c492
-      size: 225
+      md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
+      size: 139
     - path: src/test_model.py
       md5: 04a0d3fb6f5bb80a06dc565862226816
       size: 1933
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: a98426fb2cc8125af6e8a00c291abd3b
-      size: 6996
+      md5: 4e452a76535b642f62a7e45e2cebd156
+      size: 5158
     - path: evaluation/plots/roc.json
-      md5: 7cfbb1826e399d00c159361b9ed33a9f
-      size: 6746
+      md5: b80a20a9e9d6c77d6f2585a460f27d26
+      size: 5025
     - path: metrics/results.json
-      md5: 315e5d1bef540f0ff8baebe08a95985c
-      size: 148
+      md5: 7a5db652a55ad71eec16651204d28230
+      size: 134
   plot-data:
     cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
@@ -211,8 +211,8 @@ stages:
       md5: fdf4e1d4b682720870c1a5bdc4339324
       size: 37530
     - path: analysis_plots/loan_amount_over_time.png
-      md5: eb474b9e569114adef74f0b2daf3ca31
-      size: 49350
+      md5: 0d5449fe2b89882f72de765cf22ea917
+      size: 49434
     - path: analysis_plots/number_clients_per_decade_birth.png
       md5: 2e340df058d1fca688852b6641bb0943
       size: 22419
@@ -313,21 +313,21 @@ stages:
     cmd: python3 src/sample_data.py
     deps:
     - path: data/X_train_not_sampled.csv
-      md5: e450e964e89a9561e7624b8c52977d49
-      size: 218987
+      md5: 879a310fcd68153a98abab204a8b7225
+      size: 261713
     - path: data/y_train_not_sampled.csv
-      md5: 055beba85404061b1874688485c9df1a
-      size: 445
+      md5: ad20a8766930f7e0dd04bae58e772a57
+      size: 531
     - path: src/sample_data.py
       md5: 458fdedd116136a1f0210f9ee19bcc99
       size: 499
     outs:
     - path: data/X_train_all_features.csv
-      md5: d865098e2445a0a4f5e6747497100683
-      size: 377253
+      md5: dfed4cf8313a60bb67ceadbe090a9b7b
+      size: 443096
     - path: data/y_train.csv
-      md5: 10f8ab5cb10bbde933de246585f42b79
-      size: 759
+      md5: 3043f97501976c316162dfd7ca2be46b
+      size: 891
   transform-data:
     cmd: python3 src/data_transformation.py
     deps:
@@ -345,14 +345,14 @@ stages:
     cmd: python3 src/feature_selection.py
     deps:
     - path: data/X_test_all_features.csv
-      md5: dc810c39011d9bfe0eeca2274fe8a8a2
-      size: 109318
+      md5: e592b7b97ebdb87f6f1673a50d4ef7c7
+      size: 66592
     - path: data/X_train_all_features.csv
-      md5: d865098e2445a0a4f5e6747497100683
-      size: 377253
+      md5: dfed4cf8313a60bb67ceadbe090a9b7b
+      size: 443096
     - path: data/y_train.csv
-      md5: 10f8ab5cb10bbde933de246585f42b79
-      size: 759
+      md5: 3043f97501976c316162dfd7ca2be46b
+      size: 891
     - path: src/feature_selection.py
       md5: 80f658dfa1aacbf8e226d72e588cd22a
       size: 2323
@@ -364,8 +364,8 @@ stages:
           estimator: perceptron
     outs:
     - path: data/X_test.csv
-      md5: 0f5ea3b1216f4883ce4108ac65f1dd5d
-      size: 21330
+      md5: e0a3adc8f07b3f733a8f958b19d86ac0
+      size: 13003
     - path: data/X_train.csv
-      md5: 4900a16dd7f72577c6c3971b742c9c5a
-      size: 73334
+      md5: 76db87cddbf4e370fedd90b63ac729f0
+      size: 86208
