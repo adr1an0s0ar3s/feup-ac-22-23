@@ -10,8 +10,9 @@ estimators = {
     'perceptron': Perceptron(),
     'dt': DecisionTreeClassifier()
 }
-params = dvc.api.params_show()['feature_selection']
-base_estimator = estimators[params['estimator']]
+dvc_params = dvc.api.params_show()
+fs_params = dvc_params['feature_selection']
+base_estimator = estimators[fs_params['estimator']]
 
 filters = {
     'variance': VarianceThreshold(threshold=0.5),
@@ -48,16 +49,30 @@ def select(X_train, y_train, X_test, selector):
     X_test = pd.DataFrame(selector.transform(X_test), columns=X_test.columns[selector.get_support()])
     return X_train, X_test
 
-def main():
-    X_test = pd.read_csv('data/X_test_all_features.csv')
-    X_train = pd.read_csv('data/X_train_all_features.csv')
+def automatic_feature_selection(X_train, X_test):
     y_train = pd.read_csv('data/y_train.csv')
     
-    if params['filter'] != 'none':
-        X_train, X_test = select(X_train, y_train, X_test, filters[params['filter']])
+    if fs_params['filter'] != 'none':
+        X_train, X_test = select(X_train, y_train, X_test, filters[fs_params['filter']])
     
-    if params['wrapper'] != 'none':
-        X_train, X_test = select(X_train, y_train, X_test, wrappers[params['wrapper']])
+    if fs_params['wrapper'] != 'none':
+        X_train, X_test = select(X_train, y_train, X_test, wrappers[fs_params['wrapper']])
+    
+    return X_train, X_test
+
+def manual_feature_selection(X_train, X_test):
+    selected_features = dvc_params['manual_feature_selection_fields']
+
+    return X_train[selected_features], X_test[selected_features]
+
+def main():
+    X_train = pd.read_csv('data/X_train_all_features.csv')
+    X_test = pd.read_csv('data/X_test_all_features.csv')
+
+    if dvc_params['manual_feature_selection']:
+        X_train, X_test = manual_feature_selection(X_train, X_test)
+    else:
+        X_train, X_test = automatic_feature_selection(X_train, X_test)
 
     X_train.to_csv('data/X_train.csv', index=False)
     X_test.to_csv('data/X_test.csv', index=False)
