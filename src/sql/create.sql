@@ -8,7 +8,7 @@ CREATE TABLE loanDev (
     amount INT NOT NULL,
     duration INT NOT NULL,
     payments INT NOT NULL,
-    status INT NOT NULL
+    status INT
 );
 
 DROP TABLE IF EXISTS permanentOrderDev;

@@ -49,6 +49,7 @@ stages:
     - src/data_transformation.py
     outs:
     - data/prepared_data.csv 
+    - data/scaler.joblib
   split-data:
     cmd: python3 src/split_data.py
     deps: 
@@ -78,9 +79,9 @@ stages:
     outs:
     - data/X_test.csv
     - data/X_train.csv
+    - data/features.csv
     params:
     - feature_selection
-
   train-model:
     cmd: python3 src/train_model.py
     deps:

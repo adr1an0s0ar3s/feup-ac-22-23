@@ -74,6 +74,9 @@ def main():
     else:
         X_train, X_test = automatic_feature_selection(X_train, X_test)
 
+    with open('data/features.csv', 'w') as file:
+        file.write(",".join(list(X_train.columns)))
+
     X_train.to_csv('data/X_train.csv', index=False)
     X_test.to_csv('data/X_test.csv', index=False)
 

@@ -19,7 +19,7 @@ def main():
 
     # Roughly scale dataset
     scaler = StandardScaler().fit(df)
-    dump(scaler, "scaler.joblib")
+    dump(scaler, "data/scaler.joblib")
     scaled_df = pd.DataFrame(data=scaler.transform(df), columns=df.columns)
     scaled_df['status'] = df['status']
 

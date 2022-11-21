@@ -20,3 +20,5 @@
 /X_train_all_features.csv
 /X_train_not_sampled.csv
 /y_train_not_sampled.csv
+/features.csv
+/scaler.joblib
