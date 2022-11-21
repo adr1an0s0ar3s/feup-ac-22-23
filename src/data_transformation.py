@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
+from joblib import dump
 
 def convert_to_unix_timestamp(df, attribute):
     df[attribute] = df[attribute].apply(lambda x: "19" + str(x))
@@ -18,6 +19,7 @@ def main():
 
     # Roughly scale dataset
     scaler = StandardScaler().fit(df)
+    dump(scaler, "scaler.joblib")
     scaled_df = pd.DataFrame(data=scaler.transform(df), columns=df.columns)
     scaled_df['status'] = df['status']
 
