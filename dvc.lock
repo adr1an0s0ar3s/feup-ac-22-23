@@ -199,20 +199,20 @@ stages:
       md5: 3043f97501976c316162dfd7ca2be46b
       size: 891
     - path: src/train_model.py
-      md5: 430ec360ef012bcc42c3349f68317a58
-      size: 3523
+      md5: b53d3b03f92b79edc440d753900efe80
+      size: 3802
     params:
       params.yaml:
         classifiers:
-        - svm
+        - dt
         params: {}
     outs:
     - path: data/model.joblib
-      md5: 9982373a993e48a4fa097f0ae7237f28
-      size: 26230
+      md5: 7afeb91c7281ecc4f639100aad4f85ce
+      size: 7517
     - path: metrics/model_details.json
-      md5: 3be2621e8dfceb74f7afd02940d15fb2
-      size: 335
+      md5: a1768efc98b7f826afbc9713d5cd5568
+      size: 356
   test-model:
     cmd: python3 src/test_model.py
     deps:
@@ -220,8 +220,8 @@ stages:
       md5: e0a3adc8f07b3f733a8f958b19d86ac0
       size: 13003
     - path: data/model.joblib
-      md5: 9982373a993e48a4fa097f0ae7237f28
-      size: 26230
+      md5: 7afeb91c7281ecc4f639100aad4f85ce
+      size: 7517
     - path: data/y_test.csv
       md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
       size: 139
@@ -230,11 +230,11 @@ stages:
       size: 2075
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: 589798280d1a6177f85cf9f9b54edcef
-      size: 8952
+      md5: eadbcbba1fab07fc3de286564677a3eb
+      size: 1251
     - path: metrics/results.json
-      md5: b82bbefe18e411156006612550688437
-      size: 141
+      md5: f6648f1b33ef0276bb7a14e2f863cb06
+      size: 171
   clustering:
     cmd: python3 src/cluster_data.py
     deps:
@@ -245,5 +245,5 @@ stages:
       md5: 92c9402c23e0bc7f643ac84c3783fa8c
       size: 3426
     - path: src/cluster_data.py
-      md5: d3ccfdabb71f7a08a14e96bec0c0c6bd
-      size: 639
+      md5: 9fb36496a7824789739a7f8892accc3f
+      size: 827
