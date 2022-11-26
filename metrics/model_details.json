@@ -1,1 +1,1 @@
-{"model": "KNeighborsClassifier", "params": {"algorithm": "ball_tree", "leaf_size": 20, "metric": "minkowski", "metric_params": null, "n_jobs": null, "n_neighbors": 5, "p": 1, "weights": "distance"}, "fit_time": 3.5523345470428467}
+{"model": "KNeighborsClassifier", "params": {"algorithm": "ball_tree", "leaf_size": 20, "metric": "minkowski", "metric_params": null, "n_jobs": null, "n_neighbors": 5, "p": 1, "weights": "distance"}, "fit_time": 2.2391438484191895}

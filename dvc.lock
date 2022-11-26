@@ -211,7 +211,7 @@ stages:
       md5: 955ac5371ec90a69af90b5fdb59d358e
       size: 193264
     - path: metrics/model_details.json
-      md5: 86eb572b5792f2924e6f42811a7fc244
+      md5: 19f7efdd208f432e2351bb922482b1f5
       size: 231
   test-model:
     cmd: python3 src/test_model.py
@@ -233,8 +233,8 @@ stages:
       md5: 3237df4518ca1e8a60449d34ec5d0d1b
       size: 4820
     - path: metrics/results.json
-      md5: 98066e0fa9c56e7f5e40f7bc4d66a16e
-      size: 142
+      md5: 68f38eb56b5095cdcb424b93ec4c90c9
+      size: 143
   clustering:
     cmd: python3 src/cluster_data.py
     deps:
