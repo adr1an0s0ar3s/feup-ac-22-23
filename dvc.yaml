@@ -88,6 +88,8 @@ stages:
     - data/features.csv
     params:
     - feature_selection
+    - manual_feature_selection
+    - manual_feature_selection_fields
   train-model:
     cmd: python3 src/train_model.py
     deps:
