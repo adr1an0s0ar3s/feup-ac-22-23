@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.linear_model import PassiveAggressiveClassifier, Perceptron, LogisticRegression, SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import StratifiedKFold
-from sklearn.feature_selection import VarianceThreshold, SelectKBest, SelectPercentile, RFECV, SequentialFeatureSelector
+from sklearn.feature_selection import VarianceThreshold, SelectKBest, SelectPercentile, RFECV, SequentialFeatureSelector, chi2, f_regression
 import dvc.api
 
 estimators = {
@@ -17,8 +17,8 @@ base_estimator = estimators[fs_params['estimator']]
 filters = {
     'variance': VarianceThreshold(threshold=0.5),
     'kbest': SelectKBest(),
-    'kbest-chi2': SelectKBest(score_func='chi2'),
-    'kbest-f_regression': SelectKBest(score_func='f_regression'),
+    'kbest-chi2': SelectKBest(score_func=chi2),
+    'kbest-f_regression': SelectKBest(score_func=f_regression),
     'percentile': SelectPercentile(percentile=25),
 }
 

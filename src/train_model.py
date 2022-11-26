@@ -3,7 +3,8 @@ import numpy as np
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from joblib import dump
 import json
@@ -54,6 +55,17 @@ available_clfs = {
             'probability': [True],
         }
     ),
+    'nb': (
+        GaussianNB(),
+        {}
+    ),
+    'ada': (
+        AdaBoostClassifier(),
+        {
+            'n_estimators': [5, 10, 25, 50, 100],
+            'learning_rate': [0.5, 1.0, 1.5]
+        }
+    )
 }
 
 def main():

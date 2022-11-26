@@ -26,7 +26,7 @@ def main():
     
     # Calculate metrics (https://dvc.org/doc/dvclive/api-reference/live)
     live = Live('evaluation')
-    live.log_plot("roc", y_test.values.astype(int), y_pred_prob[:, 1], drop_intermediate=False)
+    #live.log_plot("roc", y_test.values.astype(int), y_pred_prob[:, 1], drop_intermediate=False)
 
     precision, recall, prc_thresholds = precision_recall_curve(y_test, y_pred_prob[:, 1])
     prc_points = list(zip(precision, recall, prc_thresholds))

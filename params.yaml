@@ -1,6 +1,6 @@
 params: {}
 classifiers:
-- svm
+- dt
 feature_selection:
   filter: kbest
   wrapper: none
