@@ -50,6 +50,12 @@ stages:
     outs:
     - data/prepared_data.csv 
     - data/scaler.joblib
+  clustering:
+    cmd: python3 src/cluster_data.py
+    deps:
+    - data/prepared_data.csv
+    - data/scaler.joblib
+    - src/cluster_data.py
   split-data:
     cmd: python3 src/split_data.py
     deps: 

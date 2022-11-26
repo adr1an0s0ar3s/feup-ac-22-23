@@ -107,11 +107,11 @@ stages:
     cmd: python3 src/train_model.py
     deps:
     - path: data/X_test.csv
-      md5: 0922e29e67a4e7f96cfde3a661676679
-      size: 28950
+      md5: 8a61f8c57919df7010e42a4df612e190
+      size: 3971
     - path: data/X_train.csv
-      md5: fd83a92088d641d2b8b03757e108cf4e
-      size: 191544
+      md5: 7d4fdfac5aaa39cf71aaa331b4c10205
+      size: 26143
     - path: data/y_test.csv
       md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
       size: 139
@@ -130,20 +130,20 @@ stages:
         params: {}
     outs:
     - path: data/model.joblib
-      md5: 23f7140cafd2ea812ab901c41e8942b2
-      size: 699161
+      md5: d1b225461c8d399db17f51dabe359461
+      size: 5721
     - path: metrics/model_details.json
-      md5: f63446a366681f3ef97fc07074f01a7c
-      size: 439
+      md5: 382a740c955e37ef0beb8653a6722ae3
+      size: 329
   test-model:
     cmd: python3 src/test_model.py
     deps:
     - path: data/X_test.csv
-      md5: 0922e29e67a4e7f96cfde3a661676679
-      size: 28950
+      md5: 8a61f8c57919df7010e42a4df612e190
+      size: 3971
     - path: data/model.joblib
-      md5: 23f7140cafd2ea812ab901c41e8942b2
-      size: 699161
+      md5: d1b225461c8d399db17f51dabe359461
+      size: 5721
     - path: data/y_test.csv
       md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
       size: 139
@@ -152,20 +152,20 @@ stages:
       size: 1943
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: 54a954461e144573431a3bf3b8b21177
-      size: 4931
+      md5: ffbdee722aa725b41e7825d340d6355f
+      size: 2054
     - path: evaluation/plots/roc.json
-      md5: ae957e891d2748ba93d9278309fad429
-      size: 4776
+      md5: eb4d4b43606b5e35b3327963ff988331
+      size: 2048
     - path: metrics/results.json
-      md5: 7b92ac9a4565835b57ba3923892aba0c
-      size: 118
+      md5: 98111f73e73e44da7577da4418f83df3
+      size: 119
   plot-data:
     cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
     deps:
     - path: data/database.db
-      md5: 20f85b42122f8f87e1e660288790e01e
+      md5: 9ae870fee84dd3e03b6e978110a7092c
       size: 35737600
     - path: src/data-analysis/account.py
       md5: da39556f9e466f269eff30c4c133872b
@@ -211,8 +211,8 @@ stages:
       md5: 6edeb6522b0d38376840892ddc4f44b6
       size: 37530
     - path: analysis_plots/loan_amount_over_time.png
-      md5: 36ea9cfbe9058d206d5875f46d8f1b93
-      size: 49216
+      md5: 5c1b5e3b79e7f59e507831e5000d45ae
+      size: 49255
     - path: analysis_plots/number_clients_per_decade_birth.png
       md5: 1602baba3620c5f25791b9072573ddfd
       size: 22419
@@ -255,13 +255,13 @@ stages:
       size: 340
     outs:
     - path: data/database.db
-      md5: 20f85b42122f8f87e1e660288790e01e
+      md5: 9ae870fee84dd3e03b6e978110a7092c
       size: 35737600
   unify-data:
     cmd: python3 src/unify_data.py
     deps:
     - path: data/database.db
-      md5: 20f85b42122f8f87e1e660288790e01e
+      md5: 9ae870fee84dd3e03b6e978110a7092c
       size: 35737600
     - path: src/unify_data.py
       md5: ee1294c54d0b120e0e56a78dd448ecf4
@@ -367,11 +367,23 @@ stages:
           estimator: perceptron
     outs:
     - path: data/X_test.csv
-      md5: 0922e29e67a4e7f96cfde3a661676679
-      size: 28950
+      md5: 8a61f8c57919df7010e42a4df612e190
+      size: 3971
     - path: data/X_train.csv
-      md5: fd83a92088d641d2b8b03757e108cf4e
-      size: 191544
+      md5: 7d4fdfac5aaa39cf71aaa331b4c10205
+      size: 26143
     - path: data/features.csv
-      md5: 4e75b3e86aabc3244c1f2f5282f6d515
-      size: 411
+      md5: c151277d7dbeb7b9af9f05071cf94b70
+      size: 58
+  clustering:
+    cmd: python3 src/cluster_data.py
+    deps:
+    - path: data/prepared_data.csv
+      md5: 44a7f0d0750436cd3595621fc40a0056
+      size: 335277
+    - path: data/scaler.joblib
+      md5: 37fb93e99cbe244611f3287a955717d5
+      size: 3487
+    - path: src/cluster_data.py
+      md5: d3ccfdabb71f7a08a14e96bec0c0c6bd
+      size: 639

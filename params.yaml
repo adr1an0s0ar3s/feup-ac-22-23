@@ -9,26 +9,6 @@ feature_selection:
   estimator: 'perceptron'
 manual_feature_selection: true
 manual_feature_selection_fields:
-- ownerBirthday
-- isShared
 - balance
-- loanPayments
-- loanAmount
-- averageSalary
-- unemploymentRate95
-- unemploymentRate96
-- sumAllTransactions
-- insurancePaymentsCount
-- insurancePaymentsAverage
 - timesIntoNegativeBalance
-- numTransactions
 - numTransactionsNegBalance
-- numExternalBankTransactions
-- withdrawalAnyMethodCount
-- maxWithdrawal
-- maxCredit
-- maxTransactionAmountDistance
-- avgSanctionInterest
-- hasStableIncome
-- transactionAmountIQR
-- hasCard
