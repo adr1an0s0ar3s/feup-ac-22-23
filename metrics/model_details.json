@@ -1,1 +1,1 @@
-{"model": "SVC", "params": {"C": 1, "break_ties": false, "cache_size": 200, "class_weight": null, "coef0": 0.0, "decision_function_shape": "ovr", "degree": 3, "gamma": "auto", "kernel": "poly", "max_iter": -1, "probability": true, "random_state": null, "shrinking": true, "tol": 0.001, "verbose": false}, "fit_time": 2.1653144359588623}
+{"model": "KNeighborsClassifier", "params": {"algorithm": "ball_tree", "leaf_size": 20, "metric": "minkowski", "metric_params": null, "n_jobs": null, "n_neighbors": 5, "p": 1, "weights": "distance"}, "fit_time": 3.5523345470428467}

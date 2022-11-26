@@ -1,10 +1,10 @@
 params: {}
 classifiers:
-- svm
+- knn
 feature_selection:
-  filter: kbest
-  wrapper: none
-  estimator: 'perceptron'
+  filter: variance
+  wrapper: forward
+  estimator: perceptron
 manual_feature_selection: false
 manual_feature_selection_fields:
 - balance
