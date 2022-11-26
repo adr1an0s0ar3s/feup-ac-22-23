@@ -1,13 +1,11 @@
 params: {}
 classifiers:
-- dt
-- knn
-- rf
+- svm
 feature_selection:
   filter: kbest
   wrapper: none
   estimator: 'perceptron'
-manual_feature_selection: true
+manual_feature_selection: false
 manual_feature_selection_fields:
 - balance
 - timesIntoNegativeBalance

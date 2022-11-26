@@ -5,6 +5,7 @@ from dvclive import Live
 import math
 import os
 import json
+import time
 
 def main():
     # Load model from disk (https://scikit-learn.org/stable/model_persistence.html)
@@ -16,7 +17,12 @@ def main():
     # Predict test data
     # Useful read: predict() vs predict_proba() - https://towardsdatascience.com/predict-vs-predict-proba-scikit-learn-bdc45daa5972
     y_pred = model.predict(X_test)
+
+    start_time = time.time()
+
     y_pred_prob = model.predict_proba(X_test)
+
+    predict_time = time.time() - start_time
     
     # Calculate metrics (https://dvc.org/doc/dvclive/api-reference/live)
     live = Live('evaluation')
@@ -46,7 +52,8 @@ def main():
             'precision': precision,
             'recall': recall,
             'f1': f1,
-            'auc': roc_auc
+            'auc': roc_auc,
+            'predict_time': predict_time,
         }, file)
 
 if __name__ == "__main__":
