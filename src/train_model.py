@@ -9,6 +9,8 @@ from joblib import dump
 import json
 import dvc.api
 
+import time
+
 available_clfs = {
     'dt': (
         DecisionTreeClassifier(),
@@ -41,7 +43,17 @@ available_clfs = {
             'criterion': ['gini', 'entropy', 'log_loss'],
             'max_leaf_nodes': [None],
         }
-    )
+    ),
+    'svm': (
+        SVC(),
+        {
+            'C': [1],
+            'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],     # 'precomputed' needs a square kernel matrix so it's not tested
+            'degree': [2, 3, 4],
+            'gamma': ['scale', 'auto'],
+            'probability': [True],
+        }
+    ),
 }
 
 def main():
@@ -67,8 +79,12 @@ def main():
             # Exhaustive search over specified parameter values for an estimator to find the best one
             best_model = GridSearchCV(clf, param_grid, scoring='roc_auc', n_jobs=-1, refit=True, cv=StratifiedKFold(n_splits=5, shuffle=False), verbose=1)
 
+            start_time = time.time()
+
             # Train model
             best_model.fit(X_train, np.ravel(y_train))
+
+            fit_time = time.time() - start_time
 
             best_models.append(best_model.best_estimator_)
             scores.append(best_model.best_score_)
@@ -94,6 +110,7 @@ def main():
         json.dump({
             'model': model.__class__.__name__,
             'params': model.get_params(),
+            'fit_time': fit_time,
         }, file)
 
 if __name__ == "__main__":
