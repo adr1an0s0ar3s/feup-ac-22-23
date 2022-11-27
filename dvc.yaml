@@ -87,7 +87,9 @@ stages:
     - data/X_train.csv
     - data/features.csv
     params:
-    - feature_selection
+    - feature_selection.filter
+    - feature_selection.wrapper
+    - feature_selection.estimator
     - manual_feature_selection
     - manual_feature_selection_fields
   train-model:
@@ -122,4 +124,44 @@ stages:
         x: recall
         y: precision
         title: Precision-Recall Curve
+    - evaluation/plots/roc.json:
+        cache: false
+        x: fpr
+        y: tpr
+        title: ROC Curve
+  plot-data:
+    cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
+    deps:
+    - data/database.db
+    - src/data-analysis/account.py
+    - src/data-analysis/client.py
+    - src/data-analysis/district.py
+    - src/data-analysis/loan.py
+    outs:
+    - analysis_plots/accounts_created_per_year.png:
+        cache: false
+    - analysis_plots/clients_sex_distribution.png:
+        cache: false
+    - analysis_plots/corr_accounts_per_district_with_district_table.png:
+        cache: false
+    - analysis_plots/district_corr.png:
+        cache: false
+    - analysis_plots/district_loan_by_district.png:
+        cache: false
+    - analysis_plots/district_loan_by_region.png:
+        cache: false
+    - analysis_plots/issuance_frequency_categories_count.png:
+        cache: false
+    - analysis_plots/loan_amount_boxplot.png:
+        cache: false
+    - analysis_plots/loan_amount_distribution0.png:
+        cache: false
+    - analysis_plots/loan_amount_distribution1.png:
+        cache: false
+    - analysis_plots/loan_amount_over_time.png:
+        cache: false
+    - analysis_plots/number_clients_per_decade_birth.png:
+        cache: false
+    - analysis_plots/top10_districts_most_accounts.png:
+        cache: false
 

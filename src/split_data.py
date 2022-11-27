@@ -15,7 +15,7 @@ def main():
         test_size += 0.01
 
     # Split into test and train data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42, shuffle=False, stratify=None)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, shuffle=False, stratify=None)
     
     # Save split data
     X_train.to_csv('data/X_train_not_sampled.csv', index=False)

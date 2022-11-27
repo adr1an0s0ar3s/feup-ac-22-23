@@ -104,8 +104,8 @@ stages:
       md5: 44a7f0d0750436cd3595621fc40a0056
       size: 335277
     - path: data/scaler.joblib
-      md5: 92c9402c23e0bc7f643ac84c3783fa8c
-      size: 3426
+      md5: 37fb93e99cbe244611f3287a955717d5
+      size: 3487
   split-data:
     cmd: python3 src/split_data.py
     deps:
@@ -113,8 +113,8 @@ stages:
       md5: 44a7f0d0750436cd3595621fc40a0056
       size: 335277
     - path: src/split_data.py
-      md5: 4d520cea3c96c3589a26773aa342a4b7
-      size: 1107
+      md5: f6cb7445e8fecaaf8a32e061e985174a
+      size: 1106
     outs:
     - path: data/X_test_all_features.csv
       md5: e592b7b97ebdb87f6f1673a50d4ef7c7
@@ -164,10 +164,9 @@ stages:
       size: 2947
     params:
       params.yaml:
-        feature_selection:
-          filter: kbest
-          wrapper: none
-          estimator: perceptron
+        feature_selection.estimator: perceptron
+        feature_selection.filter: variance
+        feature_selection.wrapper: none
         manual_feature_selection: false
         manual_feature_selection_fields:
         - balance
@@ -175,23 +174,23 @@ stages:
         - numTransactionsNegBalance
     outs:
     - path: data/X_test.csv
-      md5: e0a3adc8f07b3f733a8f958b19d86ac0
-      size: 13003
+      md5: 73988b2f85bf19f61c4e3fa01c7167b1
+      size: 65272
     - path: data/X_train.csv
-      md5: 76db87cddbf4e370fedd90b63ac729f0
-      size: 86208
+      md5: 8d8512873f13e15dfaea42d75c77d23d
+      size: 432388
     - path: data/features.csv
-      md5: 18cde53673aa61dde38c92eff0a62a54
-      size: 180
+      md5: 8e1b33b97d9fe6bec50b2d9d6ac8c2a3
+      size: 994
   train-model:
     cmd: python3 src/train_model.py
     deps:
     - path: data/X_test.csv
-      md5: e0a3adc8f07b3f733a8f958b19d86ac0
-      size: 13003
+      md5: 73988b2f85bf19f61c4e3fa01c7167b1
+      size: 65272
     - path: data/X_train.csv
-      md5: 76db87cddbf4e370fedd90b63ac729f0
-      size: 86208
+      md5: 8d8512873f13e15dfaea42d75c77d23d
+      size: 432388
     - path: data/y_test.csv
       md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
       size: 139
@@ -204,42 +203,40 @@ stages:
     params:
       params.yaml:
         classifiers:
-        - dt
-        - knn
         - rf
-        - svm
-        - nb
-        - ada
         params: {}
     outs:
     - path: data/model.joblib
-      md5: c918a5019ef82ae16c2eb1dfcc36bf78
-      size: 774619
+      md5: a2f9af32f96b18f834a1e52cd60e5252
+      size: 614233
     - path: metrics/model_details.json
-      md5: 1be497a0ede547bb79d5cb40aa695555
-      size: 472
+      md5: 077c2c6a1855ef5ca98b3697aca4aa45
+      size: 471
   test-model:
     cmd: python3 src/test_model.py
     deps:
     - path: data/X_test.csv
-      md5: e0a3adc8f07b3f733a8f958b19d86ac0
-      size: 13003
+      md5: 73988b2f85bf19f61c4e3fa01c7167b1
+      size: 65272
     - path: data/model.joblib
-      md5: c918a5019ef82ae16c2eb1dfcc36bf78
-      size: 774619
+      md5: a2f9af32f96b18f834a1e52cd60e5252
+      size: 614233
     - path: data/y_test.csv
       md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
       size: 139
     - path: src/test_model.py
-      md5: 05f5f8f628a3b9bddb9f8024a8dc8332
-      size: 2075
+      md5: 7de0628d6be9bf4962bb343ac9859365
+      size: 2074
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: 10bb444de1acb74760b97bd84d7f8f22
-      size: 5234
+      md5: 27947a715867c60f631ab8b24aa24a3f
+      size: 5186
+    - path: evaluation/plots/roc.json
+      md5: 6cba7928f9b965a14c93731efc8e5c59
+      size: 5002
     - path: metrics/results.json
-      md5: 1ca83f640390e40b9b159d17836172cf
-      size: 158
+      md5: f93ae94429061166fdeffe982fbf109d
+      size: 156
   clustering:
     cmd: python3 src/cluster_data.py
     deps:
@@ -247,8 +244,67 @@ stages:
       md5: 44a7f0d0750436cd3595621fc40a0056
       size: 335277
     - path: data/scaler.joblib
-      md5: 92c9402c23e0bc7f643ac84c3783fa8c
-      size: 3426
+      md5: 37fb93e99cbe244611f3287a955717d5
+      size: 3487
     - path: src/cluster_data.py
       md5: 9fb36496a7824789739a7f8892accc3f
       size: 827
+  plot-data:
+    cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py
+      && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
+    deps:
+    - path: data/database.db
+      md5: 9ae870fee84dd3e03b6e978110a7092c
+      size: 35737600
+    - path: src/data-analysis/account.py
+      md5: da39556f9e466f269eff30c4c133872b
+      size: 2980
+    - path: src/data-analysis/client.py
+      md5: 80ca5a42b40ee5cb1decdb0b7efeefdc
+      size: 1340
+    - path: src/data-analysis/district.py
+      md5: 906c963c595b005722d8409eba86f42d
+      size: 3919
+    - path: src/data-analysis/loan.py
+      md5: e4a72439f85d10ece4872b5af179cc94
+      size: 2240
+    outs:
+    - path: analysis_plots/accounts_created_per_year.png
+      md5: c58edf3b514f820f47ebb04a53179bc0
+      size: 21499
+    - path: analysis_plots/clients_sex_distribution.png
+      md5: 71bf9989c77179534fc22625179b7462
+      size: 14559
+    - path: analysis_plots/corr_accounts_per_district_with_district_table.png
+      md5: ad8b7a064760836d5218db7abe397676
+      size: 59250
+    - path: analysis_plots/district_corr.png
+      md5: be2e49f0a7ab659405ab67a84530da99
+      size: 185195
+    - path: analysis_plots/district_loan_by_district.png
+      md5: 2e9b7dd9e1b0657651af56dc51a3b85c
+      size: 109031
+    - path: analysis_plots/district_loan_by_region.png
+      md5: ef78a56fa4330d0f658745f469cd4a68
+      size: 33914
+    - path: analysis_plots/issuance_frequency_categories_count.png
+      md5: dda76a24b939ee8c19dc1a6c29e140d3
+      size: 34625
+    - path: analysis_plots/loan_amount_boxplot.png
+      md5: c5cefa3758f36970bd5332b468d50652
+      size: 21936
+    - path: analysis_plots/loan_amount_distribution0.png
+      md5: 5a20f6cbd7d8d318e19ecc126d320dc0
+      size: 29743
+    - path: analysis_plots/loan_amount_distribution1.png
+      md5: 6edeb6522b0d38376840892ddc4f44b6
+      size: 37530
+    - path: analysis_plots/loan_amount_over_time.png
+      md5: 2166bfad64d5273c456bec69e2a09cf2
+      size: 49381
+    - path: analysis_plots/number_clients_per_decade_birth.png
+      md5: 1602baba3620c5f25791b9072573ddfd
+      size: 22419
+    - path: analysis_plots/top10_districts_most_accounts.png
+      md5: 81ef310d34eacb2ed3cfdc7fbda760b0
+      size: 43944
