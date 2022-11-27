@@ -98,10 +98,15 @@ def main():
 
             fit_time = time.time() - start_time
 
-            best_models.append(best_model.best_estimator_)
+            best_models.append((input_clf, best_model.best_params_))
             scores.append(best_model.best_score_)
 
-        model = best_models[scores.index(max(scores))]
+        best_clf_name, params = best_models[scores.index(max(scores))]
+        model = available_clfs[best_clf_name][0]
+        model.set_params(**params)
+        start_time = time.time()
+        model.fit(X_train, np.ravel(y_train))
+        fit_time = time.time() - start_time
 
     else:
 
@@ -112,7 +117,9 @@ def main():
         model.set_params(**params)        
     
         # Train model
+        start_time = time.time()
         model.fit(X_train, np.ravel(y_train))
+        fit_time = time.time() - start_time
 
     # Store the model to disk (https://scikit-learn.org/stable/model_persistence.html)
     dump(model, 'data/model.joblib')

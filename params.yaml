@@ -1,6 +1,11 @@
 params: {}
 classifiers:
 - dt
+- knn
+- rf
+- svm
+- nb
+- ada
 feature_selection:
   filter: kbest
   wrapper: none
