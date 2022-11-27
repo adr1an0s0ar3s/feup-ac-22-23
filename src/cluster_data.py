@@ -9,11 +9,11 @@ def main():
     y_pred = kmeans.fit_predict(X)
     print(kmeans.cluster_centers_)
     print(f"KMeans Silhouette score: {silhouette_score(X, kmeans.labels_)}")
-    print(f"KMeans Homogeneity score: {completeness_score(y_true, y_pred)}")
+    print(f"KMeans Completeness score: {completeness_score(y_true, y_pred)}")
     dbscan = DBSCAN(eps=1.6, min_samples=5)
     dbscan.fit_predict(X)
     print(f"DBSCAN Silhouette score: {silhouette_score(X, dbscan.labels_)}")
-    print(f"DBSCAN Homogeneity score: {completeness_score(y_true, y_pred)}")
+    print(f"DBSCAN Completeness score: {completeness_score(y_true, y_pred)}")
 
 if __name__ == "__main__":
     main()
