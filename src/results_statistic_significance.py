@@ -1,21 +1,25 @@
 # Using a 5 x 2 CV test as described in (https://ieeexplore.ieee.org/document/6790639)
 # Based on the following implementation https://www.kaggle.com/code/ogrellier/parameter-tuning-5-x-2-fold-cv-statistical-test/notebook
 
+import argparse
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import roc_auc_score
-from sklearn.base import clone
 from joblib import load
 
+parser = argparse.ArgumentParser()
+parser.add_argument("classifier1_path")
+parser.add_argument("classifier2_path")
 
 def get_score_from_model(model, val_x, val_y):
     preds = model.predict_proba(val_x)[:, 1]
     return roc_auc_score(val_y, preds)
 
 def main():
-    classifier1 = load("data/classifier1.joblib")
-    classifier2 = load("data/classifier2.joblib")
+    args = parser.parse_args()
+    classifier1 = load(args.classifier1_path)
+    classifier2 = load(args.classifier2_path)
 
     df = pd.read_csv("data/prepared_data.csv")
     X, y = df.drop("status", axis=1), df["status"]

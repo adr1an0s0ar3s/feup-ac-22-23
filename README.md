@@ -23,6 +23,11 @@ cd submission
 python3 submission.py
 ```
 
+To execute a statistical comparison test between two models, save the `data/model.joblib` files from any two executions and run:
+```sh
+python3 src/results_statistic_significance.py path_to_classifier1 path_to_classifier2
+```
+
 All the notebooks in the `notebooks` directory assume that the pipeline has been executed at least once.
 
 ## Group #41
