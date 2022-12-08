@@ -207,11 +207,11 @@ stages:
         params: {}
     outs:
     - path: data/model.joblib
-      md5: a2f9af32f96b18f834a1e52cd60e5252
-      size: 614233
+      md5: 384a603b572948fdbf92465be9a29c05
+      size: 626041
     - path: metrics/model_details.json
-      md5: 077c2c6a1855ef5ca98b3697aca4aa45
-      size: 471
+      md5: d31b6238251c3d83a881de6ba30be16c
+      size: 472
   test-model:
     cmd: python3 src/test_model.py
     deps:
@@ -219,8 +219,8 @@ stages:
       md5: 73988b2f85bf19f61c4e3fa01c7167b1
       size: 65272
     - path: data/model.joblib
-      md5: a2f9af32f96b18f834a1e52cd60e5252
-      size: 614233
+      md5: 384a603b572948fdbf92465be9a29c05
+      size: 626041
     - path: data/y_test.csv
       md5: c5fb61bc3ed0ddbbf8f03a48748d59b6
       size: 139
@@ -229,13 +229,13 @@ stages:
       size: 2074
     outs:
     - path: evaluation/plots/precision_recall.json
-      md5: 27947a715867c60f631ab8b24aa24a3f
-      size: 5186
+      md5: 31557aad16bdb1234a3d291c52187f54
+      size: 5159
     - path: evaluation/plots/roc.json
-      md5: 6cba7928f9b965a14c93731efc8e5c59
-      size: 5002
+      md5: 6a5f006ebf6984137e0e29b31b859425
+      size: 5004
     - path: metrics/results.json
-      md5: f93ae94429061166fdeffe982fbf109d
+      md5: fdc29708f125f5d9fc0c868393c7322b
       size: 156
   clustering:
     cmd: python3 src/cluster_data.py
@@ -247,8 +247,8 @@ stages:
       md5: 37fb93e99cbe244611f3287a955717d5
       size: 3487
     - path: src/cluster_data.py
-      md5: 9fb36496a7824789739a7f8892accc3f
-      size: 827
+      md5: b4ceff79674ee7e93a5afae7a49c1ebf
+      size: 2108
   plot-data:
     cmd: python3 src/data-analysis/account.py && python3 src/data-analysis/client.py
       && python3 src/data-analysis/district.py && python3 src/data-analysis/loan.py
