@@ -2,6 +2,29 @@
 
 Project of the Machine Learning (AC) curricular unit, development in python.
 
+## How to run
+
+Create virtual environment and install all necessary dependencies:
+```sh
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Execute pipeline and see the results:
+```sh
+dvc repro
+dvc exp show
+```
+
+A submission for the kaggle competition can be created by running:
+```sh
+cd submission
+python3 submission.py
+```
+
+All the notebooks in the `notebooks` directory assume that the pipeline has been executed at least once.
+
 ## Group #41
 
 - Adriano Soares (up201904873@up.pt)
