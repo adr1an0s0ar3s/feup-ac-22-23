@@ -1,7 +1,12 @@
 import pandas as pd
 import numpy as np
-from sklearn.cluster import KMeans, DBSCAN
-from sklearn.metrics import silhouette_score, v_measure_score
+from sklearn.cluster import KMeans, DBSCAN, MeanShift
+from sklearn.metrics import (
+    silhouette_score,
+    v_measure_score,
+    completeness_score,
+    homogeneity_score,
+)
 import json
 
 
@@ -26,6 +31,8 @@ def dbscan(X, y):
     return {
         "silhouette": silhouette_score(X, best_model.labels_),
         "v_measure": v_measure_score(y, y_pred),
+        "completeness_score": completeness_score(y, y_pred),
+        "homogeneity": homogeneity_score(y, y_pred),
     }
 
 
@@ -50,6 +57,20 @@ def kmeans(X, y):
     return {
         "silhouette": silhouette_score(X, best_model.labels_),
         "v_measure": v_measure_score(y, y_pred),
+        "completeness_score": completeness_score(y, y_pred),
+        "homogeneity": homogeneity_score(y, y_pred),
+    }
+
+
+def mean_shift(X, y):
+
+    meanshift = MeanShift()
+    y_pred = meanshift.fit_predict(X)
+    return {
+        "silhouette": silhouette_score(X, meanshift.labels_),
+        "v_measure": v_measure_score(y, y_pred),
+        "completeness_score": completeness_score(y, y_pred),
+        "homogeneity": homogeneity_score(y, y_pred),
     }
 
 
@@ -67,6 +88,10 @@ def main():
 
     results = kmeans(X, y)
     with open("metrics/kmeans_results.json", "w") as file:
+        json.dump(results, file)
+
+    results = mean_shift(X, y)
+    with open("metrics/meanshift_results.json", "w") as file:
         json.dump(results, file)
 
 

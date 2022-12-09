@@ -13,17 +13,18 @@ def get_score_from_model(model, val_x, val_y):
     preds = model.predict_proba(val_x)[:, 1]
     return roc_auc_score(val_y, preds)
 
+
 def main():
     classifier1 = load("data/classifier1.joblib")
     classifier2 = load("data/classifier2.joblib")
 
     df = pd.read_csv("data/prepared_data.csv")
     X, y = df.drop("status", axis=1), df["status"]
-    
+
     # Choose seeds for each 2-fold iterations
     seeds = [13, 51, 137, 24659, 347]
 
-    # Initialize the score difference for the 1st fold of the 1st iteration 
+    # Initialize the score difference for the 1st fold of the 1st iteration
     p_1_1 = 0.0
     # Initialize a place holder for the variance estimate
     s_sqr = 0.0
@@ -37,7 +38,7 @@ def main():
         folds = StratifiedKFold(n_splits=2, shuffle=True, random_state=seed)
         # Initialize score differences
         p_i = np.zeros(2)
-            
+
         # Go through the current 2 fold
         for i_f, (train_idx, val_idx) in enumerate(folds.split(X, y)):
             train_x, train_y = X.iloc[train_idx], y.iloc[train_idx]
@@ -50,12 +51,12 @@ def main():
             # Fit the data
             classifier1.fit(train_x, train_y)
             classifier2.fit(train_x, train_y)
-            
+
             # keep score history for mean and stdev calculation
             scores_1.append(get_score_from_model(classifier1, val_x, val_y))
             scores_2.append(get_score_from_model(classifier2, val_x, val_y))
 
-            # Compute score difference for current fold  
+            # Compute score difference for current fold
             p_i[i_f] = scores_1[-1] - scores_2[-1]
 
             # Keep the score difference of the 1st iteration and 1st fold
@@ -66,20 +67,27 @@ def main():
         p_i_bar = (p_i[0] + p_i[1]) / 2
 
         # Compute the variance estimate for the current 2-fold CV
-        s_i_sqr = (p_i[0] - p_i_bar) ** 2 + (p_i[1] - p_i_bar) ** 2 
+        s_i_sqr = (p_i[0] - p_i_bar) ** 2 + (p_i[1] - p_i_bar) ** 2
 
         # Add up to the overall variance
         s_sqr += s_i_sqr
-    
+
     # Compute t value as the first difference divided by the square root of variance estimate
-    t_bar = p_1_1 / ((s_sqr / 5) ** .5) 
+    t_bar = p_1_1 / ((s_sqr / 5) ** 0.5)
 
-    diff_scores = list(i-j for i,j in zip(scores_1, scores_2))
+    diff_scores = list(i - j for i, j in zip(scores_1, scores_2))
 
-    print(f"Classifier 1: mean score = {np.mean(scores_1)} | stdev = {np.std(scores_1)}")
-    print(f"Classifier 2: mean score = {np.mean(scores_2)} | stdev = {np.std(scores_2)}")
-    print(f"Score difference mean + stdev : {np.mean(diff_scores)}, {np.std(diff_scores)}")
+    print(
+        f"Classifier 1: mean score = {np.mean(scores_1)} | stdev = {np.std(scores_1)}"
+    )
+    print(
+        f"Classifier 2: mean score = {np.mean(scores_2)} | stdev = {np.std(scores_2)}"
+    )
+    print(
+        f"Score difference mean + stdev : {np.mean(diff_scores)}, {np.std(diff_scores)}"
+    )
     print(f"t_value for the current test is {t_bar}")
+
 
 if __name__ == "__main__":
     main()
